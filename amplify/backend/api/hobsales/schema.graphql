@@ -1,0 +1,72 @@
+type Log @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  time: AWSDateTime!
+  log: String!
+  user: String!
+}
+
+type Version @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  version: String!
+  link: AWSURL!
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  username: String!
+  password: String!
+  isAdmin: Boolean!
+}
+
+type Refund @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  time: AWSDateTime!
+  quantity: Float!
+  price: Float
+  product: Product @connection
+}
+
+type Expense @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  description: String!
+  amount: Float!
+  time: AWSDateTime!
+}
+
+type Receipt @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  customer: String
+  sales: [Sale] @connection(keyName: "byReceipt", fields: ["id"])
+  time: AWSDateTime
+}
+
+type Sale @model @auth(rules: [{allow: public}]) @key(name: "byReceipt", fields: ["receiptID"]) {
+  id: ID!
+  time: AWSDateTime!
+  quantity: Float!
+  product: Product! @connection
+  receiptID: ID
+  price: Float!
+}
+
+type Stock @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  quantity: Float!
+  productName: String
+  date: AWSDate!
+}
+
+type Product @model @auth(rules: [{allow: public}]) @key(name: "byCategory", fields: ["categoryID"]) {
+  id: ID!
+  name: String!
+  price: Float!
+  categoryID: ID
+  quantity: Float!
+}
+
+type Category @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  products: [Product] @connection(keyName: "byCategory", fields: ["id"])
+}
+ 

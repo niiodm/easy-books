@@ -1,0 +1,159 @@
+import 'package:amplify_datastore/amplify_datastore.dart';
+import 'package:flutter/material.dart';
+import 'package:serkohob/app/loader/loader.dart';
+import 'package:serkohob/app/sales/add/receipt.dart';
+import 'package:serkohob/app/sales/details/sale_details.dart';
+import 'package:serkohob/app/sales/helper.dart';
+import 'package:serkohob/models/ModelProvider.dart';
+import 'package:serkohob/models/Receipt.dart';
+import 'package:serkohob/util/navigation.dart';
+import 'package:serkohob/util/numbers.dart';
+import 'package:serkohob/util/temporal.dart';
+
+class SalesWidget extends StatefulWidget {
+  const SalesWidget({Key? key}) : super(key: key);
+
+  @override
+  _SalesWidgetState createState() => _SalesWidgetState();
+}
+
+class _SalesWidgetState extends State<SalesWidget> with SalesHelper {
+  late DateTimeRange dateRange;
+
+  @override
+  void initState() {
+    super.initState();
+    final now = DateTime.now();
+    dateRange = DateTimeRange(
+      start: DateTime(now.year, now.month, now.day),
+      end: DateTime(now.year, now.month, now.day),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: stream(),
+      builder: (context, snapshot) {
+        return FutureBuilder<List<Receipt>>(
+          future: getReceiptsByDateRange(dateRange.start, dateRange.end),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return LoaderWidget();
+            }
+
+            return Scaffold(
+              body: Column(
+                children: [
+                  Card(
+                    child: ListTile(
+                      title: FutureBuilder<double>(
+                        future: sumReceipts(snapshot.data!),
+                        builder: (context, snapshot) {
+                          final sum = snapshot.hasData ? snapshot.data! : 0.0;
+                          return Text(
+                            'Total: GHS ${formatNumberAsCurrency(sum)}',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold
+                            ),
+                            // style: titleStyle,
+                          );
+                        }
+                      ),
+                      subtitle: Text(
+                        '${formatDate(TemporalDateTime(dateRange.start))} '
+                        'to ${formatDate(TemporalDateTime(dateRange.end))}',
+                      ),
+                      trailing: TextButton.icon(
+                        onPressed: selectDate,
+                        icon: Icon(Icons.date_range),
+                        label: Text('Select Date'),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: snapshot.data!.isNotEmpty
+                        ? Card(
+                            child: Scrollbar(
+                              child: buildListView(snapshot.data!),
+                            ),
+                          )
+                        : Center(child: Text('No sales to display')),
+                  ),
+                ],
+              ),
+              floatingActionButton: FloatingActionButton.extended(
+                icon: Icon(Icons.add),
+                label: Text('New Sale'),
+                onPressed: () => newSale(context),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<double> sumReceipts(List<Receipt> receipts) async {
+    final sales = <Sale>[];
+    for (var receipt in receipts) {
+      final rSales = await getSalesByReceipt(receipt);
+      sales.addAll(rSales);
+    }
+
+    return sumSales(sales);
+  }
+
+  void selectDate() async {
+    final selection = await selectDateRange(context);
+
+    if (selection == null) return;
+    setState(() => dateRange = selection);
+  }
+
+  ListView buildListView(List<Receipt> data) {
+    return ListView.separated(
+      itemBuilder: (ctx, index) {
+        final receipt = data.elementAt(index);
+
+        return FutureBuilder<List<Sale>>(
+          future: getSalesByReceipt(receipt),
+          builder: (context, snapshot) {
+            final sum = snapshot.hasData && snapshot.data!.isNotEmpty
+                ? snapshot.data!
+                    .map((sale) => sale.price * sale.quantity)
+                    .reduce((acc, item) => acc + item)
+                : 0.0;
+            final time =
+                receipt.time != null ? formatDateTime(receipt.time!) : 'N/A';
+            final customer =
+                receipt.customer != null && receipt.customer!.isNotEmpty
+                    ? receipt.customer
+                    : 'N/A';
+            return ListTile(
+              title: Text(
+                'GHS ${formatNumberAsCurrency(sum)}',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text('Time: $time, To: $customer'),
+              trailing: IconButton(
+                onPressed: () => showDetails(receipt, context),
+                icon: Icon(Icons.info_outline),
+              ),
+            );
+          },
+        );
+      },
+      separatorBuilder: (_, __) => Divider(height: 0),
+      itemCount: data.length,
+    );
+  }
+
+  void showDetails(Receipt receipt, BuildContext context) {
+    navigateTo(SaleDetailsWidget(receipt: receipt), context);
+  }
+
+  void newSale(BuildContext context) {
+    navigateTo(AddReceiptWidget(), context);
+  }
+}

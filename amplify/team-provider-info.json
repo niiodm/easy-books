@@ -1,0 +1,56 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-hobsales-staging-100256-authRole",
+      "UnauthRoleArn": "arn:aws:iam::949105599604:role/amplify-hobsales-staging-100256-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::949105599604:role/amplify-hobsales-staging-100256-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-hobsales-staging-100256-deployment",
+      "UnauthRoleName": "amplify-hobsales-staging-100256-unauthRole",
+      "StackName": "amplify-hobsales-staging-100256",
+      "StackId": "arn:aws:cloudformation:us-east-1:949105599604:stack/amplify-hobsales-staging-100256/9a4619e0-13b0-11ec-b631-0ef3e3db7079",
+      "AmplifyAppId": "d330a1acfs2wz"
+    },
+    "categories": {
+      "auth": {
+        "hobsales": {}
+      }
+    }
+  },
+  "chemist": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-hobsales-chemist-145336-authRole",
+      "UnauthRoleArn": "arn:aws:iam::949105599604:role/amplify-hobsales-chemist-145336-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::949105599604:role/amplify-hobsales-chemist-145336-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-hobsales-chemist-145336-deployment",
+      "UnauthRoleName": "amplify-hobsales-chemist-145336-unauthRole",
+      "StackName": "amplify-hobsales-chemist-145336",
+      "StackId": "arn:aws:cloudformation:us-east-1:949105599604:stack/amplify-hobsales-chemist-145336/3df6f5a0-2b6c-11ec-b2d7-0e733181096b",
+      "AmplifyAppId": "d330a1acfs2wz"
+    },
+    "categories": {
+      "auth": {
+        "hobsales": {}
+      }
+    }
+  },
+  "demo": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-hobsales-demo-155756-authRole",
+      "UnauthRoleArn": "arn:aws:iam::949105599604:role/amplify-hobsales-demo-155756-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::949105599604:role/amplify-hobsales-demo-155756-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-hobsales-demo-155756-deployment",
+      "UnauthRoleName": "amplify-hobsales-demo-155756-unauthRole",
+      "StackName": "amplify-hobsales-demo-155756",
+      "StackId": "arn:aws:cloudformation:us-east-1:949105599604:stack/amplify-hobsales-demo-155756/00d06800-46f6-11ec-8b68-0a308968b459",
+      "AmplifyAppId": "d330a1acfs2wz"
+    },
+    "categories": {
+      "auth": {
+        "hobsales": {}
+      }
+    }
+  }
+}
