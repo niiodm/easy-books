@@ -1,44 +1,23 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
-import 'package:amplify_flutter/amplify.dart';
 import 'package:serkohob/models/Expense.dart';
+import 'package:serkohob/repositories/expense_repository.dart';
 
 class ExpensesHelper {
+  final ExpenseRepository _expenseRepository = ExpenseRepository();
+
   Future<List<Expense>> getExpenses() {
-    return Amplify.DataStore.query(Expense.classType);
+    return _expenseRepository.getExpenses();
   }
 
   Future<List<Expense>> getExpensesByDate(DateTime date) {
-    final day = DateTime(date.year, date.month, date.day);
-    final nextDate = TemporalDate(
-      DateTime(date.year, date.month, date.day + 1),
-    );
-    return Amplify.DataStore.query(
-      Expense.classType,
-      where: Expense.TIME
-          .ge(TemporalDate(day).format())
-          .and(Expense.TIME.lt(nextDate.format())),
-      sortBy: [Expense.TIME.descending()],
-    );
+    return _expenseRepository.getExpensesByDate(date);
   }
 
   Future<List<Expense>> getExpensesByDateRange(DateTime start, DateTime end) {
-    final day = DateTime(start.year, start.month, start.day);
-    final nextDate = TemporalDate(DateTime(end.year, end.month, end.day + 1));
-    return Amplify.DataStore.query(
-      Expense.classType,
-      where: Expense.TIME
-          .ge(TemporalDate(day).format())
-          .and(Expense.TIME.lt(nextDate.format())),
-      sortBy: [Expense.TIME.descending()],
-    );
+    return _expenseRepository.getExpensesByDateRange(start, end);
   }
 
   double sumExpenses(List<Expense> expenses) {
-    return expenses.isEmpty
-        ? 0
-        : expenses
-            .map((e) => e.amount)
-            .reduce((value, element) => value + element);
+    return _expenseRepository.sumExpenses(expenses);
   }
 
   bool validate(Expense expense) {
@@ -46,10 +25,10 @@ class ExpensesHelper {
   }
 
   Future<void> save(Expense expense) {
-    return Amplify.DataStore.save(expense);
+    return _expenseRepository.save(expense);
   }
 
-  Stream stream() {
-    return Amplify.DataStore.observe(Expense.classType);
+  Stream<List<Expense>> stream() {
+    return _expenseRepository.watchExpenses();
   }
 }

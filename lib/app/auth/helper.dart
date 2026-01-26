@@ -1,15 +1,17 @@
-import 'package:amplify_flutter/amplify.dart';
+import 'package:serkohob/app/auth/auth_service.dart';
 import 'package:serkohob/models/User.dart';
 
 class UserHelper {
-  static late User user;
+  static User get user {
+    final currentUser = AuthService.currentUser;
+    if (currentUser == null) {
+      throw StateError('No user logged in');
+    }
+    return currentUser;
+  }
 
   Future<User?> findUserByCredentials(String username, String password) async {
-    final results = await Amplify.DataStore.query(
-      User.classType,
-      where: User.USERNAME.eq(username).and(User.PASSWORD.eq(password)),
-    );
-
-    return results.isNotEmpty ? results.first : null;
+    final success = await AuthService.login(username, password);
+    return success ? AuthService.currentUser : null;
   }
 }

@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:serkohob/app/loader/loader.dart';
 import 'package:serkohob/app/sales/helper.dart';
-import 'package:serkohob/models/ModelProvider.dart';
+import 'package:serkohob/models/Product.dart';
 import 'package:serkohob/models/Receipt.dart';
+import 'package:serkohob/models/Sale.dart';
+import 'package:serkohob/repositories/product_repository.dart';
 import 'package:serkohob/util/numbers.dart';
 
 class SaleDetailsWidget extends StatelessWidget with SalesHelper {
   final Receipt receipt;
   final padding = const EdgeInsets.all(4);
+  final ProductRepository _productRepository = ProductRepository();
 
-  const SaleDetailsWidget({Key? key, required this.receipt}) : super(key: key);
+  SaleDetailsWidget({Key? key, required this.receipt}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -83,14 +86,22 @@ class SaleDetailsWidget extends StatelessWidget with SalesHelper {
             '${formatNumberAsCurrency(sale.price)}'
             ' = '
             'GHS ${formatNumberAsCurrency(amount)}';
-        return Card(
-          child: ListTile(
-            leading: CircleAvatar(
-              child: Icon(Icons.shopping_cart_outlined),
-            ),
-            title: Text(sale.product.name),
-            subtitle: Text(subtitle),
-          ),
+        return FutureBuilder<Product?>(
+          future: _productRepository.getProductById(sale.productId),
+          builder: (context, productSnapshot) {
+            final productName = productSnapshot.hasData 
+                ? productSnapshot.data!.name 
+                : 'Unknown';
+            return Card(
+              child: ListTile(
+                leading: CircleAvatar(
+                  child: Icon(Icons.shopping_cart_outlined),
+                ),
+                title: Text(productName),
+                subtitle: Text(subtitle),
+              ),
+            );
+          },
         );
       },
       itemCount: data.length,

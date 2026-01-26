@@ -78,7 +78,6 @@ class LoginWidget extends StatelessWidget with UserHelper {
 
     final user = await findUserByCredentials(username, password);
     if (user != null) {
-      UserHelper.user = user;
       if (!user.isAdmin) LogHelper.log('Logged in');
 
       navigateReplacement(HomeWidget(), context);

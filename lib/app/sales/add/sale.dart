@@ -1,9 +1,9 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:flutter/material.dart';
 import 'package:serkohob/app/sales/helper.dart';
 import 'package:serkohob/app/stock/helper.dart';
 import 'package:serkohob/app/widgets/autocomplete/select_products.dart';
-import 'package:serkohob/models/ModelProvider.dart';
+import 'package:serkohob/models/Product.dart';
+import 'package:serkohob/models/Sale.dart';
 import 'package:serkohob/util/dialog.dart';
 
 class AddSaleWidget extends StatefulWidget {
@@ -81,13 +81,13 @@ class _AddSaleWidgetState extends State<AddSaleWidget> with SalesHelper {
     final quantity = double.tryParse(_quantity.text) ?? 0.0;
 
     final sale = Sale(
-      product: product!,
+      productId: product!.id,
       price: product!.price,
       quantity: quantity,
-      time: TemporalDateTime(DateTime.now()),
+      time: DateTime.now(),
     );
 
-    if (!validateSale(sale)) {
+    if (!validateSale(sale, product!)) {
       await alert(
         context: context,
         title: 'Error',

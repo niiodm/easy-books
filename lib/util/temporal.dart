@@ -1,23 +1,22 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-String formatDateTime(TemporalDateTime time) {
+String formatDateTime(DateTime time) {
   final format = 'MMM dd y h:mm a';
-  return DateFormat(format).format(time.getDateTimeInUtc());
+  return DateFormat(format).format(time.toLocal());
 }
 
-String formatDate(TemporalDateTime time) {
+String formatDate(DateTime time) {
   final format = 'MMM dd, y';
-  return DateFormat(format).format(time.getDateTimeInUtc());
+  return DateFormat(format).format(time.toLocal());
 }
 
-String formatTime(TemporalDateTime time) {
+String formatTime(DateTime time) {
   final format = 'h:mm a';
-  return DateFormat(format).format(time.getDateTimeInUtc());
+  return DateFormat(format).format(time.toLocal());
 }
 
-Future<DateTime?> selectDate(BuildContext context, {DateTime? initialDate} ) async {
+Future<DateTime?> selectDate(BuildContext context, {DateTime? initialDate}) async {
   final firstDate = DateTime(2021);
   final lastDate = DateTime(2071);
   return showDatePicker(
@@ -28,7 +27,7 @@ Future<DateTime?> selectDate(BuildContext context, {DateTime? initialDate} ) asy
   );
 }
 
-Future<DateTimeRange?> selectDateRange(BuildContext context, {DateTime? initialDate} ) async {
+Future<DateTimeRange?> selectDateRange(BuildContext context, {DateTime? initialDate}) async {
   final firstDate = DateTime(2021);
   final lastDate = DateTime(2071);
   return showDateRangePicker(

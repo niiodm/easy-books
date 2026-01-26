@@ -1,25 +1,28 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
-import 'package:amplify_flutter/amplify.dart';
 import 'package:serkohob/models/Category.dart';
 import 'package:serkohob/models/Product.dart';
 import 'package:serkohob/models/Stock.dart';
+import 'package:serkohob/repositories/product_repository.dart';
+import 'package:serkohob/repositories/stock_repository.dart';
 
 class StockHelper {
+  final ProductRepository _productRepository = ProductRepository();
+  final CategoryRepository _categoryRepository = CategoryRepository();
+  final StockRepository _stockRepository = StockRepository();
+
   Future<List<Product>> getProducts() {
-    return Amplify.DataStore.query(Product.classType,
-        sortBy: [Product.NAME.ascending()]);
+    return _productRepository.getProducts();
   }
 
   Future<void> saveProduct(Product product) {
-    return Amplify.DataStore.save(product);
+    return _productRepository.saveProduct(product);
   }
 
-  Stream productStream() {
-    return Amplify.DataStore.observe(Product.classType);
+  Stream<List<Product>> productStream() {
+    return _productRepository.watchProducts();
   }
 
   Future<List<Category>> getCategories() {
-    return Amplify.DataStore.query(Category.classType);
+    return _categoryRepository.getCategories();
   }
 
   bool validateProduct(Product product) {
@@ -27,48 +30,43 @@ class StockHelper {
   }
 
   Future<void> addToProductQuantity(Product product) async {
-    final oldProduct = (await Amplify.DataStore.query(
-      Product.classType,
-      where: Product.ID.eq(product.id),
-    ))
-        .first;
-    final updatedProduct =
-        oldProduct.copyWith(quantity: product.quantity + oldProduct.quantity);
-
-    final stockHelper = StockHelper();
-    stockHelper.updateStock(updatedProduct, updatedProduct.quantity);
-    return Amplify.DataStore.save(updatedProduct);
+    final oldProduct = await _productRepository.getProductById(product.id);
+    if (oldProduct != null) {
+      final updatedProduct = oldProduct.copyWith(
+        quantity: product.quantity + oldProduct.quantity,
+      );
+      await _productRepository.saveProduct(updatedProduct);
+      await updateStock(updatedProduct, updatedProduct.quantity);
+    }
   }
 
   Future<void> subtractFromProductQuantity(Product product) async {
-    final oldProduct = (await Amplify.DataStore.query(
-      Product.classType,
-      where: Product.ID.eq(product.id),
-    ))
-        .first;
-    final updatedProduct =
-        oldProduct.copyWith(quantity: oldProduct.quantity - product.quantity);
-    return Amplify.DataStore.save(updatedProduct);
+    final oldProduct = await _productRepository.getProductById(product.id);
+    if (oldProduct != null) {
+      final updatedProduct = oldProduct.copyWith(
+        quantity: oldProduct.quantity - product.quantity,
+      );
+      await _productRepository.saveProduct(updatedProduct);
+    }
   }
 
   Future<void> updateStock(Product product, double quantity) async {
-    final stocks = await Amplify.DataStore.query(Stock.classType,
-        where: Stock.PRODUCTNAME.eq(product.name));
+    final stocks = await _stockRepository.getStocksByProductName(product.name);
 
     if (stocks.isEmpty) {
-      return Amplify.DataStore.save(
+      await _stockRepository.save(
         Stock(
           quantity: quantity,
           productName: product.name,
-          date: TemporalDate.now(),
+          date: DateTime.now(),
         ),
       );
+    } else {
+      final stock = stocks.first;
+      await _stockRepository.save(
+        stock.copyWith(quantity: quantity),
+      );
     }
-
-    final stock = stocks.first;
-    return Amplify.DataStore.save(
-      stock.copyWith(quantity: quantity),
-    );
   }
 
   double sumProductValues(List<Product> products) {

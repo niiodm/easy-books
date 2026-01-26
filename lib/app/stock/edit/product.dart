@@ -19,7 +19,7 @@ class _EditProductState extends State<EditProduct> with StockHelper {
   final name = TextEditingController();
   final quantity = TextEditingController();
   final price = TextEditingController();
-  String? categoryID;
+  int? categoryID;
 
   final formKey = GlobalKey<FormState>();
   final _padding = EdgeInsets.all(16.0);
@@ -74,7 +74,7 @@ class _EditProductState extends State<EditProduct> with StockHelper {
                   snapshot.hasData ? snapshot.data! : <Category>[];
               return SizedBox(
                 width: double.infinity,
-                child: DropdownButtonFormField<String>(
+                child: DropdownButtonFormField<int>(
                   decoration: InputDecoration(labelText: 'Category'),
                   isExpanded: true,
                   value: categoryID,
@@ -82,7 +82,7 @@ class _EditProductState extends State<EditProduct> with StockHelper {
                     setState(() => categoryID = selection);
                   },
                   items: categories
-                      .map((category) => DropdownMenuItem<String>(
+                      .map((category) => DropdownMenuItem<int>(
                           child: Text(category.name), value: category.id))
                       .toList(),
                 ),

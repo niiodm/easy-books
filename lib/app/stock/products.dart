@@ -5,7 +5,7 @@ import 'package:serkohob/app/loader/loader.dart';
 import 'package:serkohob/app/stock/add/stock.dart';
 import 'package:serkohob/app/stock/helper.dart';
 import 'package:serkohob/app/stock/product_tile.dart';
-import 'package:serkohob/models/ModelProvider.dart';
+import 'package:serkohob/models/Product.dart';
 import 'package:serkohob/util/navigation.dart';
 
 class StockWidget extends StatefulWidget {
@@ -46,9 +46,8 @@ class _StockWidgetState extends State<StockWidget> with StockHelper {
                     return LoaderWidget();
                   }
 
-                  final data = snapshot.data!.where((product) => product.name
-                      .toLowerCase()
-                      .contains(filter.toLowerCase()));
+                  final data = snapshot.data!.where((product) => 
+                      product.name.toLowerCase().contains(filter.toLowerCase()));
                   return Scaffold(
                     body: data.isNotEmpty
                         ? Scrollbar(child: buildListView(data))

@@ -1,10 +1,10 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:flutter/material.dart';
 import 'package:serkohob/app/auth/helper.dart';
 import 'package:serkohob/app/expenses/helper.dart';
 import 'package:serkohob/app/sales/helper.dart';
 import 'package:serkohob/app/stock/helper.dart';
 import 'package:serkohob/constants.dart' as constants;
+import 'package:serkohob/repositories/product_repository.dart';
 import 'package:serkohob/util/numbers.dart';
 import 'package:serkohob/util/temporal.dart';
 
@@ -49,8 +49,8 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                   // style: titleStyle,
                 ),
                 subtitle: Text(
-                  '${formatDate(TemporalDateTime(dateRange.start))} '
-                  'to ${formatDate(TemporalDateTime(dateRange.end))}',
+                  '${formatDate(dateRange.start)} '
+                  'to ${formatDate(dateRange.end)}',
                 ),
                 trailing: TextButton.icon(
                   onPressed: selectDate,
@@ -266,6 +266,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
   Future<List<Map<String, Object>>> sumSalesByCategory() async {
     final stockHelper = StockHelper();
     final salesHelper = SalesHelper();
+    final productRepository = ProductRepository();
 
     try {
       final sales = await salesHelper.getSalesByDateRange(
@@ -273,11 +274,22 @@ class _DashboardWidgetState extends State<DashboardWidget> {
         dateRange.end,
       );
 
+      // Load all products
+      final productMap = <int, int?>{}; // productId -> categoryID
+      for (final sale in sales) {
+        if (!productMap.containsKey(sale.productId)) {
+          final product = await productRepository.getProductById(sale.productId);
+          if (product != null) {
+            productMap[sale.productId] = product.categoryID;
+          }
+        }
+      }
+
       final categories = await stockHelper.getCategories();
       return categories.map((e) {
         final filter = sales
-            .where((sale) => sale.product.categoryID == e.id)
-            .map((e) => e.quantity * e.price);
+            .where((sale) => productMap[sale.productId] == e.id)
+            .map((sale) => sale.quantity * sale.price);
         final sum = filter.isEmpty
             ? 0.0
             : filter.reduce((value, element) => value + element);

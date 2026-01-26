@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:serkohob/app/stock/helper.dart';
 import 'package:serkohob/app/widgets/autocomplete/select_products.dart';
-import 'package:serkohob/models/ModelProvider.dart';
+import 'package:serkohob/models/Product.dart';
 import 'package:serkohob/util/dialog.dart';
 
 class AddGood extends StatefulWidget {

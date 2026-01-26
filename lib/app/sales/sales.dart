@@ -1,11 +1,10 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:flutter/material.dart';
 import 'package:serkohob/app/loader/loader.dart';
 import 'package:serkohob/app/sales/add/receipt.dart';
 import 'package:serkohob/app/sales/details/sale_details.dart';
 import 'package:serkohob/app/sales/helper.dart';
-import 'package:serkohob/models/ModelProvider.dart';
 import 'package:serkohob/models/Receipt.dart';
+import 'package:serkohob/models/Sale.dart';
 import 'package:serkohob/util/navigation.dart';
 import 'package:serkohob/util/numbers.dart';
 import 'package:serkohob/util/temporal.dart';
@@ -61,8 +60,8 @@ class _SalesWidgetState extends State<SalesWidget> with SalesHelper {
                         }
                       ),
                       subtitle: Text(
-                        '${formatDate(TemporalDateTime(dateRange.start))} '
-                        'to ${formatDate(TemporalDateTime(dateRange.end))}',
+                        '${formatDate(dateRange.start)} '
+                        'to ${formatDate(dateRange.end)}',
                       ),
                       trailing: TextButton.icon(
                         onPressed: selectDate,

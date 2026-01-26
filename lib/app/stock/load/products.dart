@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:serkohob/app/stock/helper.dart';
 import 'package:serkohob/app/stock/product_tile.dart';
-import 'package:serkohob/models/ModelProvider.dart';
+import 'package:serkohob/models/Product.dart';
 import 'package:serkohob/util/assets.dart';
 import 'package:serkohob/util/dialog.dart';
 
@@ -39,7 +39,7 @@ class _LoadProductsFromAssetState extends State<LoadProductsFromAsset>
             name: e.first,
             price: 0,
             quantity: 0,
-            categoryID: categories.first.id))
+            categoryID: categories.isNotEmpty ? categories.first.id : null))
         .toList();
 
     setState(() {

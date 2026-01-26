@@ -1,7 +1,8 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:flutter/material.dart';
 import 'package:serkohob/app/refunds/helper.dart';
+import 'package:serkohob/models/Product.dart';
 import 'package:serkohob/models/Refund.dart';
+import 'package:serkohob/repositories/product_repository.dart';
 import 'package:serkohob/util/numbers.dart';
 import 'package:serkohob/util/temporal.dart';
 
@@ -14,6 +15,7 @@ class RefundsWidget extends StatefulWidget {
 
 class _RefundsWidgetState extends State<RefundsWidget> with RefundsHelper {
   var dateRange = DateTimeRange(start: DateTime.now(), end: DateTime.now());
+  final ProductRepository _productRepository = ProductRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +43,8 @@ class _RefundsWidgetState extends State<RefundsWidget> with RefundsHelper {
                         // style: titleStyle,
                       ),
                       subtitle: Text(
-                        '${formatDate(TemporalDateTime(dateRange.start))} '
-                        'to ${formatDate(TemporalDateTime(dateRange.end))}',
+                        '${formatDate(dateRange.start)} '
+                        'to ${formatDate(dateRange.end)}',
                       ),
                       trailing: TextButton.icon(
                         onPressed: selectDate,
@@ -82,16 +84,27 @@ class _RefundsWidgetState extends State<RefundsWidget> with RefundsHelper {
     return ListView.separated(
       itemBuilder: (ctx, index) {
         final refund = data.elementAt(index);
+        final price = refund.price ?? 0.0;
 
-        return ListTile(
-          title: Text(
-            'GHS ${formatNumberAsCurrency(refund.quantity * refund.price!)}',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          subtitle: Text(
-            'Product: ${refund.product!.name}, '
-                'Time: ${formatDateTime(refund.time)}}',
-          ),
+        return FutureBuilder<Product?>(
+          future: refund.productId != null 
+              ? _productRepository.getProductById(refund.productId!)
+              : Future.value(null),
+          builder: (context, productSnapshot) {
+            final productName = productSnapshot.hasData 
+                ? productSnapshot.data!.name 
+                : 'Unknown';
+            return ListTile(
+              title: Text(
+                'GHS ${formatNumberAsCurrency(refund.quantity * price)}',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(
+                'Product: $productName, '
+                    'Time: ${formatDateTime(refund.time)}',
+              ),
+            );
+          },
         );
       },
       separatorBuilder: (_, __) => Divider(height: 0),

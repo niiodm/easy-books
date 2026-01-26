@@ -1,10 +1,11 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:flutter/material.dart';
 import 'package:serkohob/app/logs/helper.dart';
 import 'package:serkohob/app/sales/add/sale.dart';
 import 'package:serkohob/app/sales/helper.dart';
+import 'package:serkohob/models/Product.dart';
 import 'package:serkohob/models/Receipt.dart';
 import 'package:serkohob/models/Sale.dart';
+import 'package:serkohob/repositories/product_repository.dart';
 import 'package:serkohob/util/dialog.dart';
 import 'package:serkohob/util/navigation.dart';
 import 'package:serkohob/util/numbers.dart';
@@ -19,6 +20,8 @@ class AddReceiptWidget extends StatefulWidget {
 class _AddReceiptWidgetState extends State<AddReceiptWidget> with SalesHelper {
   String customer = '';
   List<Sale> sales = [];
+  final ProductRepository _productRepository = ProductRepository();
+  final Map<String, Product> _productsCache = {};
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +113,7 @@ class _AddReceiptWidgetState extends State<AddReceiptWidget> with SalesHelper {
         final reversed = data.reversed;
         final sale = reversed.elementAt(i);
         final amount = sale.quantity * sale.price;
+        final productName = _productsCache[sale.productId]?.name ?? 'Unknown';
         final subtitle = '${formatNumberAsQuantity(sale.quantity)}'
             ' x '
             '${formatNumberAsCurrency(sale.price)}'
@@ -120,7 +124,7 @@ class _AddReceiptWidgetState extends State<AddReceiptWidget> with SalesHelper {
             leading: CircleAvatar(
               child: Icon(Icons.shopping_cart_outlined),
             ),
-            title: Text(sale.product.name),
+            title: Text(productName),
             subtitle: Text(subtitle),
             trailing: IconButton(
               onPressed: () => removeSale(sale),
@@ -132,6 +136,7 @@ class _AddReceiptWidgetState extends State<AddReceiptWidget> with SalesHelper {
       itemCount: data.length,
     );
   }
+
 
   void addSale() async {
     Sale? sale = await navigateTo(AddSaleWidget(), context);
@@ -147,13 +152,7 @@ class _AddReceiptWidgetState extends State<AddReceiptWidget> with SalesHelper {
   }
 
   void save() async {
-    final receipt = Receipt(
-      customer: customer,
-      sales: sales,
-      time: TemporalDateTime.now(),
-    );
-
-    if (!validateReceipt(receipt)) {
+    if (!validateReceipt(sales)) {
       await alert(
         context: context,
         title: 'Error',
@@ -169,12 +168,19 @@ class _AddReceiptWidgetState extends State<AddReceiptWidget> with SalesHelper {
     );
 
     if (confirmation == true) {
+      final receipt = Receipt(
+        customer: customer.isEmpty ? null : customer,
+        time: DateTime.now(),
+      );
       await saveReceipt(receipt);
+      final receiptId = receipt.id;
       LogHelper.log('Made a sale');
-      receipt.sales!
-          .map((e) => e.copyWith(receiptID: receipt.id))
-          .forEach(saveSale);
-      adjustProductQuantities(receipt.sales!);
+      
+      // Save all sales with receipt ID
+      for (final sale in sales) {
+        await saveSale(sale.copyWith(receiptID: receiptId));
+      }
+      await adjustProductQuantities(sales);
 
       Navigator.pop(context, receipt);
     }

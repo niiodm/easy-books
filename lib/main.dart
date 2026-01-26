@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:serkohob/app/amplify_app.dart';
+import 'package:serkohob/app/auth/auth_service.dart';
 import 'package:serkohob/app/auth/login.dart';
 import 'package:serkohob/constants.dart' as constants;
+import 'package:serkohob/services/database_service.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Initialize database
+  await DatabaseService.instance;
+  // Restore session if exists
+  await AuthService.restoreSession();
   runApp(MyApp());
 }
 
@@ -22,9 +28,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         primarySwatch: constants.themeColor
       ),
-      home: AmplifyApp(
-        child: LoginWidget(),
-      ),
+      home: LoginWidget(),
     );
   }
 }
