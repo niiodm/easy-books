@@ -80,6 +80,7 @@ class _EditCategoryState extends State<EditCategory> with StockHelper {
     }
 
     final category = widget.category.copyWith(
+      id: widget.category.id,
       name: name.text.trim(),
     );
 

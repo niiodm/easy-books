@@ -21,7 +21,20 @@ class _AddReceiptWidgetState extends State<AddReceiptWidget> with SalesHelper {
   String customer = '';
   List<Sale> sales = [];
   final ProductRepository _productRepository = ProductRepository();
-  final Map<String, Product> _productsCache = {};
+  final Map<int, Product> _productsCache = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _updateProductsCache();
+  }
+
+  void _updateProductsCache() async {
+    final allProducts = await _productRepository.getProducts();
+    for (final product in allProducts) {
+      _productsCache[product.id] = product;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

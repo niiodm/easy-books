@@ -85,8 +85,10 @@ class _AddStockState extends State<AddStock> with StockHelper {
     );
   }
 
-  void save() {
-    products.forEach(addToProductQuantity);
+  void save() async {
+    for (final product in products) {
+      await addToProductQuantity(product);
+    }
     LogHelper.log('Added products to stock');
     Navigator.pop(context);
   }

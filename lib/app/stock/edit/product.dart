@@ -133,6 +133,7 @@ class _EditProductState extends State<EditProduct> with StockHelper {
     }
 
     final product = widget.product.copyWith(
+      id: widget.product.id,
       name: name.text,
       price: double.tryParse(price.text) ?? 0,
       quantity: double.tryParse(quantity.text) ?? 0,
