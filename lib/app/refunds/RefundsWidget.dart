@@ -1,4 +1,3 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:easy_books/app/refunds/add/AddRefundWidget.dart';
 import 'package:easy_books/app/stock/StockHelper.dart';
 import 'package:easy_books/models/Product.dart';
@@ -21,8 +20,8 @@ class _RefundsWidgetState extends State<RefundsWidget> with RefundsHelper {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot<Refund>>(
-      stream: observeRefundsInDateRange(dateRange),
+    return FutureBuilder<List<Refund>>(
+      future: getRefundsByDateRange(dateRange),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           print('snapshot error: ${snapshot.error}');
@@ -32,7 +31,8 @@ class _RefundsWidgetState extends State<RefundsWidget> with RefundsHelper {
           return const Center(child: CircularProgressIndicator());
         }
 
-        final sum = sumRefunds(snapshot.data!.items);
+        final refunds = snapshot.data ?? [];
+        final sum = sumRefunds(refunds);
         return Scaffold(
           body: Column(
             children: [
@@ -45,8 +45,8 @@ class _RefundsWidgetState extends State<RefundsWidget> with RefundsHelper {
                     ),
                   ),
                   subtitle: Text(
-                    '${formatDate(TemporalDateTime(dateRange.start))} '
-                    'to ${formatDate(TemporalDateTime(dateRange.end))}',
+                    '${formatDate(dateRange.start)} '
+                    'to ${formatDate(dateRange.end)}',
                   ),
                   trailing: TextButton.icon(
                     onPressed: selectDate,
@@ -56,8 +56,8 @@ class _RefundsWidgetState extends State<RefundsWidget> with RefundsHelper {
                 ),
               ),
               Expanded(
-                child: snapshot.data!.items.isNotEmpty
-                    ? Card(child: buildListView(snapshot.data!.items))
+                child: refunds.isNotEmpty
+                    ? Card(child: buildListView(refunds))
                     : const Center(child: Text('No refunds to display')),
               ),
             ],
@@ -88,8 +88,8 @@ class _RefundsWidgetState extends State<RefundsWidget> with RefundsHelper {
       itemBuilder: (ctx, index) {
         final refund = data.elementAt(index);
 
-        final refundCost = refund.quantity * refund.price;
-        final titleText = 'GHS ${formatNumberAsCurrency(refund.price)}'
+        final refundCost = refund.quantity * (refund.price ?? 0);
+        final titleText = 'GHS ${formatNumberAsCurrency(refund.price ?? 0)}'
             ' x '
             '${formatNumberAsQuantity(refund.quantity)}'
             ' = '
@@ -99,8 +99,8 @@ class _RefundsWidgetState extends State<RefundsWidget> with RefundsHelper {
             titleText,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          subtitle: FutureBuilder<Product?>(
-            future: stockHelper.getProductByID(refund.refundProductId),
+          subtitle: refund.productId != null ? FutureBuilder<Product?>(
+            future: stockHelper.getProductByID(refund.productId!),
             builder: (context, snapshot) {
               final productName = snapshot.hasData ? snapshot.data?.name : '';
 
@@ -109,7 +109,7 @@ class _RefundsWidgetState extends State<RefundsWidget> with RefundsHelper {
                 'Time: ${formatDateTime(refund.time)}',
               );
             },
-          ),
+          ) : Text('Time: ${formatDateTime(refund.time)}'),
         );
       },
       separatorBuilder: (_, __) => const Divider(height: 0),

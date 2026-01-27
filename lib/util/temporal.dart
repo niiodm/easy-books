@@ -1,15 +1,14 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-String formatDateTime(TemporalDateTime time) {
+String formatDateTime(DateTime time) {
   const format = 'MMM dd y h:mm a';
-  return DateFormat(format).format(time.getDateTimeInUtc());
+  return DateFormat(format).format(time.toLocal());
 }
 
-String formatDate(TemporalDateTime time) {
+String formatDate(DateTime time) {
   const format = 'MMM dd, y';
-  return DateFormat(format).format(time.getDateTimeInUtc());
+  return DateFormat(format).format(time.toLocal());
 }
 
 String formatMonth(TemporalMonth time) {
@@ -17,9 +16,9 @@ String formatMonth(TemporalMonth time) {
   return DateFormat(format).format(time.date);
 }
 
-String formatTime(TemporalDateTime time) {
+String formatTime(DateTime time) {
   const format = 'h:mm a';
-  return DateFormat(format).format(time.getDateTimeInUtc());
+  return DateFormat(format).format(time.toLocal());
 }
 
 Future<DateTime?> selectDate(BuildContext context, {DateTime? initialDate} ) async {

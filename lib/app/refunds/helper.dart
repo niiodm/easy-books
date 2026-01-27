@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:serkohob/models/Refund.dart';
-import 'package:serkohob/repositories/refund_repository.dart';
+import 'package:easy_books/models/Refund.dart';
+import 'package:easy_books/repositories/refund_repository.dart';
 
 class RefundsHelper {
   final RefundRepository _refundRepository = RefundRepository();

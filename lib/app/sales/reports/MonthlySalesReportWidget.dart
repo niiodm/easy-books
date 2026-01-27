@@ -1,4 +1,3 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:easy_books/app/loader/LoaderWidget.dart';
 import 'package:easy_books/app/sales/SalesHelper.dart';
 import 'package:easy_books/models/Sale.dart';
@@ -7,21 +6,25 @@ import 'package:easy_books/util/temporal.dart';
 import 'package:flutter/material.dart';
 
 class MonthlySalesReportWidget extends StatelessWidget with SalesHelper {
-  const MonthlySalesReportWidget({Key? key}) : super(key: key);
+  MonthlySalesReportWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot<Sale>>(
-        stream: observeSales(),
+    return FutureBuilder<List<Sale>>(
+        future: getSales(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const LoaderWidget();
           }
 
-          final sales = snapshot.data!.items;
+          if (!snapshot.hasData) {
+            return const Center(child: Text('No sales data'));
+          }
+
+          final sales = snapshot.data!;
           final monthSalesMap = <TemporalMonth, List<Sale>>{};
           for (var sale in sales) {
-            final month = TemporalMonth(sale.time.getDateTimeInUtc());
+            final month = TemporalMonth(sale.time);
             if (!monthSalesMap.containsKey(month)) {
               monthSalesMap[month] = <Sale>[];
             }
@@ -29,12 +32,15 @@ class MonthlySalesReportWidget extends StatelessWidget with SalesHelper {
             monthSalesMap[month]!.add(sale);
           }
 
-          final months = monthSalesMap.keys;
+          final months = monthSalesMap.keys.toList()..sort((a, b) {
+            if (a.year != b.year) return b.year.compareTo(a.year);
+            return b.month.compareTo(a.month);
+          });
 
           return ListView.builder(
             itemCount: months.length,
             itemBuilder: (_, index) {
-              final month = months.elementAt(index);
+              final month = months[index];
 
               final sum = sumSales(monthSalesMap[month]!);
               return ListTile(

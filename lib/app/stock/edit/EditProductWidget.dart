@@ -21,7 +21,7 @@ class _EditProductWidgetState extends State<EditProductWidget> with StockHelper 
   final quantity = TextEditingController();
   final price = TextEditingController();
   final threshold = TextEditingController();
-  String? categoryID;
+  int? categoryID;
 
   final formKey = GlobalKey<FormState>();
   final _padding = const EdgeInsets.all(16.0);
@@ -41,8 +41,7 @@ class _EditProductWidgetState extends State<EditProductWidget> with StockHelper 
     final productThreshold = await getThresholdByProduct(widget.product) ??
         eb.Threshold(
           quantity: double.tryParse(threshold.text.trim()) ?? 0,
-          product: widget.product,
-          thresholdProductId: widget.product.id,
+          productId: widget.product.id,
         );
 
     threshold.text = productThreshold.quantity.toString();
@@ -88,7 +87,7 @@ class _EditProductWidgetState extends State<EditProductWidget> with StockHelper 
                   snapshot.hasData ? snapshot.data! : <Category>[];
               return SizedBox(
                 width: double.infinity,
-                child: DropdownButtonFormField<String>(
+                child: DropdownButtonFormField<int?>(
                   decoration: const InputDecoration(labelText: 'Category'),
                   isExpanded: true,
                   value: categoryID,
@@ -96,7 +95,7 @@ class _EditProductWidgetState extends State<EditProductWidget> with StockHelper 
                     setState(() => categoryID = selection);
                   },
                   items: categories
-                      .map((category) => DropdownMenuItem<String>(
+                      .map((category) => DropdownMenuItem<int?>(
                           child: Text(category.name), value: category.id))
                       .toList(),
                 ),
@@ -156,8 +155,7 @@ class _EditProductWidgetState extends State<EditProductWidget> with StockHelper 
     final productThreshold = await getThresholdByProduct(widget.product) ??
         eb.Threshold(
           quantity: double.tryParse(threshold.text.trim()) ?? 0,
-          product: widget.product,
-          thresholdProductId: widget.product.id,
+          productId: widget.product.id,
         );
 
     final product = widget.product.copyWith(
@@ -171,7 +169,7 @@ class _EditProductWidgetState extends State<EditProductWidget> with StockHelper 
     await saveThreshold(
       productThreshold.copyWith(
         quantity: double.tryParse(threshold.text.trim()) ?? 0,
-        product: product,
+        productId: product.id,
       ),
     );
     LogHelper.log(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:serkohob/app/logs/helper.dart';
-import 'package:serkohob/app/stock/add/good.dart';
-import 'package:serkohob/app/stock/helper.dart';
-import 'package:serkohob/models/Product.dart';
-import 'package:serkohob/util/navigation.dart';
-import 'package:serkohob/util/numbers.dart';
+import 'package:easy_books/app/logs/helper.dart';
+import 'package:easy_books/app/stock/add/good.dart';
+import 'package:easy_books/app/stock/helper.dart';
+import 'package:easy_books/models/Product.dart';
+import 'package:easy_books/util/navigation.dart';
+import 'package:easy_books/util/numbers.dart';
 
 class AddStock extends StatefulWidget {
   const AddStock({Key? key}) : super(key: key);

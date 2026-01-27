@@ -10,7 +10,7 @@ class ProductTile extends StatelessWidget with StockHelper {
   final VoidCallback? action;
   final bool canDelete;
 
-  const ProductTile(
+  ProductTile(
       {Key? key, required this.product, this.action, this.canDelete = false})
       : super(key: key);
 
@@ -28,8 +28,7 @@ class ProductTile extends StatelessWidget with StockHelper {
           final threshold = snapshot.data ??
               eb.Threshold(
                 quantity: 0,
-                product: product,
-                thresholdProductId: product.id,
+                productId: product.id,
               );
 
           return Chip(

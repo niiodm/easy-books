@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UpdateWidget extends StatelessWidget with VersionHelper {
-  const UpdateWidget({Key? key}) : super(key: key);
+  UpdateWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

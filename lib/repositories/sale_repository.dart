@@ -1,8 +1,7 @@
 import 'package:isar/isar.dart';
-import 'package:serkohob/models/Product.dart';
-import 'package:serkohob/models/Receipt.dart';
-import 'package:serkohob/models/Sale.dart';
-import 'package:serkohob/services/database_service.dart';
+import 'package:easy_books/models/Receipt.dart';
+import 'package:easy_books/models/Sale.dart';
+import 'package:easy_books/services/database_service.dart';
 
 class SaleRepository {
   Stream<List<Receipt>>? _receiptsStream;

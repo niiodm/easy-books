@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:serkohob/app/auth/helper.dart';
-import 'package:serkohob/app/auth/login.dart';
-import 'package:serkohob/app/logs/logs.dart';
-import 'package:serkohob/app/stock/manage.dart';
-import 'package:serkohob/app/stock/manage_categories.dart';
-import 'package:serkohob/util/navigation.dart';
+import 'package:easy_books/app/auth/helper.dart';
+import 'package:easy_books/app/auth/login.dart';
+import 'package:easy_books/app/logs/logs.dart';
+import 'package:easy_books/app/stock/manage.dart';
+import 'package:easy_books/app/stock/manage_categories.dart';
+import 'package:easy_books/util/navigation.dart';
 
 class SettingsWidget extends StatelessWidget {
   SettingsWidget({Key? key}) : super(key: key);

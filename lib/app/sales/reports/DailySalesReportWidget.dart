@@ -1,44 +1,47 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:easy_books/app/loader/LoaderWidget.dart';
 import 'package:easy_books/app/sales/SalesHelper.dart';
-import 'package:easy_books/models/ModelProvider.dart';
+import 'package:easy_books/models/Sale.dart';
 import 'package:easy_books/util/numbers.dart';
 import 'package:easy_books/util/temporal.dart';
 import 'package:flutter/material.dart';
 
 class DailySalesReportWidget extends StatelessWidget with SalesHelper {
-  const DailySalesReportWidget({Key? key}) : super(key: key);
+  DailySalesReportWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot<Sale>>(
-      stream: observeSales(),
+    return FutureBuilder<List<Sale>>(
+      future: getSales(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const LoaderWidget();
         }
 
-        final sales = snapshot.data!.items;
-        final dateSalesMap = <TemporalDate, List<Sale>>{};
-        for (var sale in sales) {
-          final time = TemporalDate(sale.time.getDateTimeInUtc());
-          if (!dateSalesMap.containsKey(time)) {
-            dateSalesMap[time] = <Sale>[];
-          }
-
-          dateSalesMap[time]!.add(sale);
+        if (!snapshot.hasData) {
+          return const Center(child: Text('No sales data'));
         }
 
-        final times = dateSalesMap.keys;
+        final sales = snapshot.data!;
+        final dateSalesMap = <DateTime, List<Sale>>{};
+        for (var sale in sales) {
+          final date = DateTime(sale.time.year, sale.time.month, sale.time.day);
+          if (!dateSalesMap.containsKey(date)) {
+            dateSalesMap[date] = <Sale>[];
+          }
+
+          dateSalesMap[date]!.add(sale);
+        }
+
+        final dates = dateSalesMap.keys.toList()..sort((a, b) => b.compareTo(a));
 
         return ListView.builder(
-          itemCount: times.length,
+          itemCount: dates.length,
           itemBuilder: (_, index) {
-            final time = times.elementAt(index);
+            final date = dates[index];
 
-            final sum = sumSales(dateSalesMap[time]!);
+            final sum = sumSales(dateSalesMap[date]!);
             return ListTile(
-              subtitle: Text(formatDate(TemporalDateTime(time.getDateTime()))),
+              subtitle: Text(formatDate(date)),
               title: Text(
                 'Sum: GHS ${formatNumberAsCurrency(sum)}',
                 style: const TextStyle(fontWeight: FontWeight.bold),

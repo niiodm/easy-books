@@ -1,64 +1,48 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
-import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:easy_books/app/stock/StockHelper.dart';
-import 'package:easy_books/models/ModelProvider.dart';
+import 'package:easy_books/models/Refund.dart';
+import 'package:easy_books/repositories/product_repository.dart';
+import 'package:easy_books/repositories/refund_repository.dart';
 import 'package:flutter/material.dart';
 
 class RefundsHelper {
+  final RefundRepository _refundRepository = RefundRepository();
+  final ProductRepository _productRepository = ProductRepository();
+
   Future<List<Refund>> getRefunds() {
-    return Amplify.DataStore.query(
-      Refund.classType,
-      sortBy: [Refund.TIME.descending()],
-    );
+    return _refundRepository.getRefunds();
   }
 
   Future<List<Refund>> getRefundsByDateRange(DateTimeRange range) {
-    final nextDay = DateTime(
-      range.end.year,
-      range.end.month,
-      range.end.day + 1,
-    );
-    return Amplify.DataStore.query(
-      Refund.classType,
-      where: Refund.TIME
-          .ge(TemporalDate(range.start).format())
-          .and(Refund.TIME.lt(TemporalDate(nextDay).format())),
-      sortBy: [Refund.TIME.descending()],
-    );
+    return _refundRepository.getRefundsByDateRange(range.start, range.end);
   }
 
-  Stream<QuerySnapshot<Refund>> observeRefundsInDateRange(DateTimeRange range) {
-    final nextDay = DateTime(
-      range.end.year,
-      range.end.month,
-      range.end.day + 1,
-    );
-    return Amplify.DataStore.observeQuery(
-      Refund.classType,
-      where: Refund.TIME
-          .ge(TemporalDate(range.start).format())
-          .and(Refund.TIME.lt(TemporalDate(nextDay).format())),
-      sortBy: [Refund.TIME.descending()],
-    );
+  Stream<List<Refund>> observeRefundsInDateRange(DateTimeRange range) {
+    return _refundRepository.watchRefunds();
   }
 
   Future<void> saveRefund(Refund refund) {
-    return Amplify.DataStore.save(refund);
+    return _refundRepository.save(refund);
   }
 
-  void adjustProductQuantityWithRefund(Refund refund) {
-    final product = refund.product
-        .copyWith(quantity: refund.product.quantity + refund.quantity);
-    Amplify.DataStore.save(product);
-    final stockHelper = StockHelper();
-    stockHelper.updateStock(product, product.quantity);
+  Future<void> adjustProductQuantityWithRefund(Refund refund) async {
+    if (refund.productId != null) {
+      final product = await _productRepository.getProductById(refund.productId!);
+      if (product != null) {
+        final updatedProduct = product.copyWith(
+          quantity: product.quantity + refund.quantity,
+        );
+        await _productRepository.saveProduct(updatedProduct);
+        final stockHelper = StockHelper();
+        await stockHelper.updateStock(updatedProduct, updatedProduct.quantity);
+      }
+    }
   }
 
   double sumRefunds(List<Refund> refunds) {
     return refunds.isEmpty
         ? 0
         : refunds
-            .map((e) => e.quantity * e.price)
+            .map((e) => e.quantity * (e.price ?? 0))
             .reduce((value, element) => value + element);
   }
 }

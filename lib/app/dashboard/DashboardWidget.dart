@@ -1,4 +1,3 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:easy_books/app/refunds/RefundsHelper.dart';
 import 'package:easy_books/models/Category.dart';
 import 'package:flutter/material.dart';
@@ -53,8 +52,8 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                   // style: titleStyle,
                 ),
                 subtitle: Text(
-                  '${formatDate(TemporalDateTime(dateRange.start))} '
-                  'to ${formatDate(TemporalDateTime(dateRange.end))}',
+                  '${formatDate(dateRange.start)} '
+                  'to ${formatDate(dateRange.end)}',
                 ),
                 trailing: TextButton.icon(
                   onPressed: selectDate,
@@ -88,7 +87,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                           },
                         ),
                       ),
-                      StreamBuilder<QuerySnapshot<Category>>(
+                      StreamBuilder<List<Category>>(
                         stream: categoryStream,
                         builder: (context, snapshot) {
                           return buildCategoryStockSums();
@@ -183,7 +182,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                             style: titleStyle,
                           ),
                         ),
-                        StreamBuilder<QuerySnapshot<Category>>(
+                        StreamBuilder<List<Category>>(
                           stream: categoryStream,
                           builder: (context, snapshot) {
                             return buildCategorySumList();
@@ -347,7 +346,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
         final productIDs =
             products.where((p) => p.categoryID == e.id).map((e) => e.id);
         final filter = sales
-            .where((sale) => productIDs.contains(sale.saleProductId))
+            .where((sale) => productIDs.contains(sale.productId))
             .map((e) => e.quantity * e.price);
         final sum = filter.isEmpty
             ? 0.0

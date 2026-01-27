@@ -1,4 +1,3 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:easy_books/app/logs/LogHelper.dart';
 import 'package:easy_books/app/refunds/RefundsHelper.dart';
 import 'package:easy_books/app/stock/StockHelper.dart';
@@ -80,11 +79,10 @@ class _AddRefundWidgetState extends State<AddRefundWidget> with RefundsHelper {
     final quantity = double.tryParse(_quantity.text) ?? 0.0;
 
     final refund = Refund(
-      time: TemporalDateTime.now(),
+      time: DateTime.now(),
       quantity: quantity,
       price: product!.price,
-      product: product!,
-      refundProductId: product!.id,
+      productId: product!.id,
     );
 
     final confirmed = await confirm(

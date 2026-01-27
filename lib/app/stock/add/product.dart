@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:serkohob/app/logs/helper.dart';
-import 'package:serkohob/app/stock/helper.dart';
-import 'package:serkohob/models/Category.dart';
-import 'package:serkohob/models/Product.dart';
-import 'package:serkohob/util/dialog.dart';
-import 'package:serkohob/util/navigation.dart';
+import 'package:easy_books/app/logs/helper.dart';
+import 'package:easy_books/app/stock/helper.dart';
+import 'package:easy_books/models/Category.dart';
+import 'package:easy_books/models/Product.dart';
+import 'package:easy_books/util/dialog.dart';
+import 'package:easy_books/util/navigation.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({Key? key}) : super(key: key);

@@ -11,7 +11,7 @@ class SaleDetailsWidget extends StatelessWidget with SalesHelper {
   final Receipt receipt;
   final padding = const EdgeInsets.all(4);
 
-  const SaleDetailsWidget({Key? key, required this.receipt}) : super(key: key);
+  SaleDetailsWidget({Key? key, required this.receipt}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -92,12 +92,12 @@ class SaleDetailsWidget extends StatelessWidget with SalesHelper {
               child: Icon(Icons.shopping_cart_outlined),
             ),
             title: FutureBuilder<Product?>(
-                future: stockHelper.getProductByID(sale.saleProductId),
+                future: stockHelper.getProductByID(sale.productId),
                 builder: (context, snapshot) {
                   final productName =
                       snapshot.hasData ? snapshot.data?.name : '';
                   return Text(
-                    productName!,
+                    productName ?? 'Unknown',
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   );
                 }),

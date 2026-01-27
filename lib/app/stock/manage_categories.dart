@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:serkohob/app/loader/loader.dart';
-import 'package:serkohob/app/stock/add/category.dart';
-import 'package:serkohob/app/stock/edit/category.dart';
-import 'package:serkohob/app/stock/helper.dart';
-import 'package:serkohob/app/stock/category_tile.dart';
-import 'package:serkohob/models/Category.dart';
-import 'package:serkohob/util/navigation.dart';
+import 'package:easy_books/app/loader/loader.dart';
+import 'package:easy_books/app/stock/add/category.dart';
+import 'package:easy_books/app/stock/edit/category.dart';
+import 'package:easy_books/app/stock/helper.dart';
+import 'package:easy_books/app/stock/category_tile.dart';
+import 'package:easy_books/models/Category.dart';
+import 'package:easy_books/util/navigation.dart';
 
 class ManageCategoriesWidget extends StatefulWidget {
   const ManageCategoriesWidget({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:serkohob/app/stock/helper.dart';
-import 'package:serkohob/app/stock/product_tile.dart';
-import 'package:serkohob/models/Product.dart';
-import 'package:serkohob/util/assets.dart';
-import 'package:serkohob/util/dialog.dart';
+import 'package:easy_books/app/stock/helper.dart';
+import 'package:easy_books/app/stock/product_tile.dart';
+import 'package:easy_books/models/Product.dart';
+import 'package:easy_books/util/assets.dart';
+import 'package:easy_books/util/dialog.dart';
 
 class LoadProductsFromAsset extends StatefulWidget {
   const LoadProductsFromAsset({Key? key}) : super(key: key);

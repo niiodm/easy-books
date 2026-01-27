@@ -1,4 +1,3 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_books/app/loader/LoaderWidget.dart';
 import 'package:easy_books/app/logs/LogHelper.dart';
@@ -44,8 +43,8 @@ class _LogsWidgetState extends State<LogsWidget> with LogHelper {
                     // style: titleStyle,
                   ),
                   subtitle: Text(
-                    '${formatDate(TemporalDateTime(dateRange.start))} '
-                    'to ${formatDate(TemporalDateTime(dateRange.end))}',
+                    '${formatDate(dateRange.start)} '
+                    'to ${formatDate(dateRange.end)}',
                   ),
                   trailing: TextButton.icon(
                     onPressed: selectDate,

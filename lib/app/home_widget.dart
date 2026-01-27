@@ -10,10 +10,10 @@ import 'package:easy_books/constants.dart' as constants;
 import 'package:easy_books/util/navigation.dart';
 
 class HomeWidget extends StatefulWidget {
-  const HomeWidget({Key? key}) : super(key: key);
+  const HomeWidget({super.key});
 
   @override
-  _HomeWidgetState createState() => _HomeWidgetState();
+  State<HomeWidget> createState() => _HomeWidgetState();
 }
 
 class _HomeWidgetState extends State<HomeWidget> {

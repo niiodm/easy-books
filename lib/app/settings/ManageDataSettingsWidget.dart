@@ -1,4 +1,4 @@
-import 'package:easy_books/app/auth/ManageUsersWidget.dart';
+import 'package:easy_books/app/auth/manage_users_widget.dart';
 import 'package:easy_books/app/export/export.dart';
 import 'package:easy_books/app/export/import_csv.dart';
 import 'package:easy_books/app/export/import_widget.dart';
@@ -9,7 +9,7 @@ import 'package:easy_books/util/navigation.dart';
 import 'package:flutter/material.dart';
 
 class ManageDataSettingsWidget extends StatelessWidget {
-  ManageDataSettingsWidget({Key? key}) : super(key: key);
+  ManageDataSettingsWidget({super.key});
 
   final items = <SettingsItem>[
     SettingsItem(
@@ -20,12 +20,12 @@ class ManageDataSettingsWidget extends StatelessWidget {
     SettingsItem(
       title: 'Add and Edit Product Categories',
       iconData: Icons.list_alt_outlined,
-      action: (context) => navigateTo(const ManageCategoriesWidget(), context),
+      action: (context) => navigateTo(ManageCategoriesWidget(), context),
     ),
     SettingsItem(
       title: 'Manage Staff',
       iconData: Icons.accessibility,
-      action: (context) => navigateTo(const ManageUsersWidget(), context),
+      action: (context) => navigateTo(ManageUsersWidget(), context),
     ),
     SettingsItem(
       title: 'Export Data',

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_books/app/stock/StockHelper.dart';
 import 'package:easy_books/app/stock/ProductTile.dart';
-import 'package:easy_books/models/ModelProvider.dart';
+import 'package:easy_books/models/Product.dart';
 import 'package:easy_books/util/assets.dart';
 import 'package:easy_books/util/dialog.dart';
 

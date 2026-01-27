@@ -1,4 +1,3 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_books/app/expenses/ExpensesHelper.dart';
 import 'package:easy_books/app/logs/LogHelper.dart';
@@ -75,7 +74,7 @@ class AddExpenseWidget extends StatelessWidget with ExpensesHelper {
     final expense = Expense(
       description: description,
       amount: amount,
-      time: TemporalDateTime.now(),
+      time: DateTime.now(),
     );
     if (!validate(expense)) {
       await alert(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:serkohob/app/sales/helper.dart';
-import 'package:serkohob/app/stock/helper.dart';
-import 'package:serkohob/app/widgets/autocomplete/select_products.dart';
-import 'package:serkohob/models/Product.dart';
-import 'package:serkohob/models/Sale.dart';
-import 'package:serkohob/util/dialog.dart';
+import 'package:easy_books/app/sales/helper.dart';
+import 'package:easy_books/app/stock/helper.dart';
+import 'package:easy_books/app/widgets/autocomplete/select_products.dart';
+import 'package:easy_books/models/Product.dart';
+import 'package:easy_books/models/Sale.dart';
+import 'package:easy_books/util/dialog.dart';
 
 class AddSaleWidget extends StatefulWidget {
   const AddSaleWidget({Key? key}) : super(key: key);

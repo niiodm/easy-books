@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:serkohob/app/dashboard/dashboard.dart';
-import 'package:serkohob/app/expenses/expenses.dart';
-import 'package:serkohob/app/sales/sales.dart';
-import 'package:serkohob/app/settings/settings.dart';
-import 'package:serkohob/app/stock/products.dart';
-import 'package:serkohob/constants.dart' as constants;
-import 'package:serkohob/util/navigation.dart';
+import 'package:easy_books/app/dashboard/dashboard.dart';
+import 'package:easy_books/app/expenses/expenses.dart';
+import 'package:easy_books/app/sales/sales.dart';
+import 'package:easy_books/app/settings/settings.dart';
+import 'package:easy_books/app/stock/products.dart';
+import 'package:easy_books/constants.dart' as constants;
+import 'package:easy_books/util/navigation.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({Key? key}) : super(key: key);

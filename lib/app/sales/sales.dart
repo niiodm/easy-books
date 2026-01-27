@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:serkohob/app/loader/loader.dart';
-import 'package:serkohob/app/sales/add/receipt.dart';
-import 'package:serkohob/app/sales/details/sale_details.dart';
-import 'package:serkohob/app/sales/helper.dart';
-import 'package:serkohob/models/Receipt.dart';
-import 'package:serkohob/models/Sale.dart';
-import 'package:serkohob/util/navigation.dart';
-import 'package:serkohob/util/numbers.dart';
-import 'package:serkohob/util/temporal.dart';
+import 'package:easy_books/app/loader/loader.dart';
+import 'package:easy_books/app/sales/add/receipt.dart';
+import 'package:easy_books/app/sales/details/sale_details.dart';
+import 'package:easy_books/app/sales/helper.dart';
+import 'package:easy_books/models/Receipt.dart';
+import 'package:easy_books/models/Sale.dart';
+import 'package:easy_books/util/navigation.dart';
+import 'package:easy_books/util/numbers.dart';
+import 'package:easy_books/util/temporal.dart';
 
 class SalesWidget extends StatefulWidget {
   const SalesWidget({Key? key}) : super(key: key);

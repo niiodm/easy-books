@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:serkohob/app/auth/helper.dart';
-import 'package:serkohob/app/home.dart';
-import 'package:serkohob/app/logs/helper.dart';
-import 'package:serkohob/constants.dart' as constants;
-import 'package:serkohob/util/dialog.dart';
-import 'package:serkohob/util/navigation.dart';
+import 'package:easy_books/app/auth/helper.dart';
+import 'package:easy_books/app/home.dart';
+import 'package:easy_books/app/logs/helper.dart';
+import 'package:easy_books/constants.dart' as constants;
+import 'package:easy_books/util/dialog.dart';
+import 'package:easy_books/util/navigation.dart';
 
 class LoginWidget extends StatelessWidget with UserHelper {
   LoginWidget({Key? key}) : super(key: key);

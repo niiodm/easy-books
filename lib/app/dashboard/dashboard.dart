@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:serkohob/app/auth/helper.dart';
-import 'package:serkohob/app/expenses/helper.dart';
-import 'package:serkohob/app/sales/helper.dart';
-import 'package:serkohob/app/stock/helper.dart';
-import 'package:serkohob/constants.dart' as constants;
-import 'package:serkohob/repositories/product_repository.dart';
-import 'package:serkohob/util/numbers.dart';
-import 'package:serkohob/util/temporal.dart';
+import 'package:easy_books/app/auth/helper.dart';
+import 'package:easy_books/app/expenses/helper.dart';
+import 'package:easy_books/app/sales/helper.dart';
+import 'package:easy_books/app/stock/helper.dart';
+import 'package:easy_books/constants.dart' as constants;
+import 'package:easy_books/repositories/product_repository.dart';
+import 'package:easy_books/util/numbers.dart';
+import 'package:easy_books/util/temporal.dart';
 
 class DashboardWidget extends StatefulWidget {
   const DashboardWidget({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:serkohob/app/loader/loader.dart';
-import 'package:serkohob/app/logs/helper.dart';
-import 'package:serkohob/models/Log.dart';
-import 'package:serkohob/util/dialog.dart';
-import 'package:serkohob/util/temporal.dart';
+import 'package:easy_books/app/loader/loader.dart';
+import 'package:easy_books/app/logs/helper.dart';
+import 'package:easy_books/models/Log.dart';
+import 'package:easy_books/util/dialog.dart';
+import 'package:easy_books/util/temporal.dart';
 
 class LogsWidget extends StatefulWidget {
   const LogsWidget({Key? key}) : super(key: key);

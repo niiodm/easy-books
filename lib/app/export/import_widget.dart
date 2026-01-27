@@ -231,13 +231,12 @@ class _ImportScreenState extends State<ImportScreen> {
       setState(() => loaderText = 'Saving sales: $i of $length');
       final sale = data!.sales.elementAt(i);
       // log('sale imported: ${sale.toJson()}');
-      final savable = sale.copyWith(saleProductId: sale.product.id);
-      // log('sale to save: ${savable.toJson()}');
+      // Sale already has productId, no need to copyWith
       try {
-        await salesHelper.saveSale(savable);
+        await salesHelper.saveSale(sale);
       } catch (e) {
         log(e.toString());
-        final saleString = sale.toJson().toString();
+        final saleString = sale.toString();
         alert(context: context, content: saleString, title: 'Error!');
         return;
       }

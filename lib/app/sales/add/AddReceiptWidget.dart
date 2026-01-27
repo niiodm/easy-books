@@ -1,8 +1,9 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_books/app/logs/LogHelper.dart';
 import 'package:easy_books/app/sales/add/AddSaleWidget.dart';
 import 'package:easy_books/app/sales/SalesHelper.dart';
+import 'package:easy_books/app/stock/StockHelper.dart';
+import 'package:easy_books/models/Product.dart';
 import 'package:easy_books/models/Receipt.dart';
 import 'package:easy_books/models/Sale.dart';
 import 'package:easy_books/util/dialog.dart';
@@ -19,6 +20,7 @@ class AddReceiptWidget extends StatefulWidget {
 class _AddReceiptWidgetState extends State<AddReceiptWidget> with SalesHelper {
   String customer = '';
   List<Sale> sales = [];
+  final StockHelper _stockHelper = StockHelper();
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +122,13 @@ class _AddReceiptWidgetState extends State<AddReceiptWidget> with SalesHelper {
             leading: const CircleAvatar(
               child: Icon(Icons.shopping_cart_outlined),
             ),
-            title: Text(sale.product.name),
+            title: FutureBuilder<Product?>(
+              future: _stockHelper.getProductByID(sale.productId),
+              builder: (context, snapshot) {
+                final productName = snapshot.hasData ? snapshot.data?.name : 'Loading...';
+                return Text(productName ?? 'Unknown');
+              },
+            ),
             subtitle: Text(subtitle),
             trailing: IconButton(
               onPressed: () => removeSale(sale),
@@ -147,13 +155,7 @@ class _AddReceiptWidgetState extends State<AddReceiptWidget> with SalesHelper {
   }
 
   void save() async {
-    final receipt = Receipt(
-      customer: customer,
-      sales: sales,
-      time: TemporalDateTime.now(),
-    );
-
-    if (!validateReceipt(receipt)) {
+    if (sales.isEmpty) {
       await alert(
         context: context,
         title: 'Error',
@@ -170,13 +172,23 @@ class _AddReceiptWidgetState extends State<AddReceiptWidget> with SalesHelper {
 
     if (confirmation != true) return;
 
+    // Save receipt first to get its ID
+    final receipt = Receipt(
+      customer: customer.isEmpty ? null : customer,
+      time: DateTime.now(),
+    );
     await saveReceipt(receipt);
-    LogHelper.log('Made a sale');
-    receipt.sales!
-        .map((e) => e.copyWith(receiptID: receipt.id))
-        .forEach(saveSale);
-    adjustProductQuantitiesWithSales(receipt.sales!);
 
+    // Save all sales with receiptID
+    for (final sale in sales) {
+      final saleWithReceipt = sale.copyWith(receiptID: receipt.id);
+      await saveSale(saleWithReceipt);
+    }
+
+    // Adjust product quantities
+    await adjustProductQuantitiesWithSales(sales);
+
+    LogHelper.log('Made a sale');
     Navigator.pop(context, receipt);
   }
 
@@ -210,7 +222,7 @@ class _AddReceiptWidgetState extends State<AddReceiptWidget> with SalesHelper {
     );
 
     setState(() {
-      customer = name;
+      customer = name ?? '';
     });
   }
 }

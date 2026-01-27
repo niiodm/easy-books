@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:serkohob/models/Product.dart';
-import 'package:serkohob/util/numbers.dart';
+import 'package:easy_books/models/Product.dart';
+import 'package:easy_books/util/numbers.dart';
 
 class ProductAutoComplete extends StatelessWidget {
   final String label;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:serkohob/models/Category.dart';
+import 'package:easy_books/models/Category.dart';
 
 class CategoryTile extends StatelessWidget {
   final Category category;

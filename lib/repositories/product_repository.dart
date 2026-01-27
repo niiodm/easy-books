@@ -1,7 +1,7 @@
 import 'package:isar/isar.dart';
-import 'package:serkohob/models/Category.dart';
-import 'package:serkohob/models/Product.dart';
-import 'package:serkohob/services/database_service.dart';
+import 'package:easy_books/models/Category.dart';
+import 'package:easy_books/models/Product.dart';
+import 'package:easy_books/services/database_service.dart';
 
 class ProductRepository {
   Stream<List<Product>>? _productsStream;

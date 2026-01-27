@@ -5,7 +5,7 @@ import 'package:easy_books/app/loader/LoaderWidget.dart';
 import 'package:easy_books/app/stock/StockHelper.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/ModelProvider.dart';
+import 'package:easy_books/models/Category.dart';
 
 class ImportCSVScreen extends StatefulWidget {
   const ImportCSVScreen({Key? key}) : super(key: key);

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:serkohob/app/loader/loader.dart';
-import 'package:serkohob/app/sales/helper.dart';
-import 'package:serkohob/models/Product.dart';
-import 'package:serkohob/models/Receipt.dart';
-import 'package:serkohob/models/Sale.dart';
-import 'package:serkohob/repositories/product_repository.dart';
-import 'package:serkohob/util/numbers.dart';
+import 'package:easy_books/app/loader/loader.dart';
+import 'package:easy_books/app/sales/helper.dart';
+import 'package:easy_books/models/Product.dart';
+import 'package:easy_books/models/Receipt.dart';
+import 'package:easy_books/models/Sale.dart';
+import 'package:easy_books/repositories/product_repository.dart';
+import 'package:easy_books/util/numbers.dart';
 
 class SaleDetailsWidget extends StatelessWidget with SalesHelper {
   final Receipt receipt;

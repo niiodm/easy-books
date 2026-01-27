@@ -1,4 +1,3 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:easy_books/models/Sale.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_books/app/loader/LoaderWidget.dart';
@@ -61,8 +60,8 @@ class _SalesWidgetState extends State<SalesWidget> with SalesHelper {
                         }
                       ),
                       subtitle: Text(
-                        '${formatDate(TemporalDateTime(dateRange.start))} '
-                        'to ${formatDate(TemporalDateTime(dateRange.end))}',
+                        '${formatDate(dateRange.start)} '
+                        'to ${formatDate(dateRange.end)}',
                       ),
                       trailing: TextButton.icon(
                         onPressed: selectDate,
@@ -124,7 +123,7 @@ class _SalesWidgetState extends State<SalesWidget> with SalesHelper {
                     .map((sale) => sale.price * sale.quantity)
                     .reduce((acc, item) => acc + item)
                 : 0.0;
-            final time = formatDateTime(receipt.time);
+            final time = receipt.time != null ? formatDateTime(receipt.time!) : 'N/A';
             final customer =
                 receipt.customer != null && receipt.customer!.isNotEmpty
                     ? receipt.customer

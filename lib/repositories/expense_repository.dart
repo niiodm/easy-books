@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
-import 'package:serkohob/models/Expense.dart';
-import 'package:serkohob/services/database_service.dart';
+import 'package:easy_books/models/Expense.dart';
+import 'package:easy_books/services/database_service.dart';
 
 class ExpenseRepository {
   Stream<List<Expense>>? _expensesStream;

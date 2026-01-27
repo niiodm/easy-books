@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:serkohob/app/expenses/helper.dart';
-import 'package:serkohob/app/logs/helper.dart';
-import 'package:serkohob/models/Expense.dart';
-import 'package:serkohob/util/dialog.dart';
-import 'package:serkohob/util/numbers.dart';
+import 'package:easy_books/app/expenses/helper.dart';
+import 'package:easy_books/app/logs/helper.dart';
+import 'package:easy_books/models/Expense.dart';
+import 'package:easy_books/util/dialog.dart';
+import 'package:easy_books/util/numbers.dart';
 
 class AddExpenseWidget extends StatelessWidget with ExpensesHelper {
   AddExpenseWidget({Key? key}) : super(key: key);

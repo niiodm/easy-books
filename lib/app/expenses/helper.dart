@@ -1,5 +1,5 @@
-import 'package:serkohob/models/Expense.dart';
-import 'package:serkohob/repositories/expense_repository.dart';
+import 'package:easy_books/models/Expense.dart';
+import 'package:easy_books/repositories/expense_repository.dart';
 
 class ExpensesHelper {
   final ExpenseRepository _expenseRepository = ExpenseRepository();

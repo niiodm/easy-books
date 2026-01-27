@@ -1,15 +1,18 @@
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:serkohob/models/Category.dart';
-import 'package:serkohob/models/Expense.dart';
-import 'package:serkohob/models/Log.dart';
-import 'package:serkohob/models/Product.dart';
-import 'package:serkohob/models/Receipt.dart';
-import 'package:serkohob/models/Refund.dart';
-import 'package:serkohob/models/Sale.dart';
-import 'package:serkohob/models/Stock.dart';
-import 'package:serkohob/models/User.dart';
-import 'package:serkohob/models/Version.dart';
+import 'package:easy_books/models/AdminData.dart';
+import 'package:easy_books/models/Category.dart';
+import 'package:easy_books/models/Expense.dart';
+import 'package:easy_books/models/Log.dart';
+import 'package:easy_books/models/Permissions.dart';
+import 'package:easy_books/models/Product.dart';
+import 'package:easy_books/models/Receipt.dart';
+import 'package:easy_books/models/Refund.dart';
+import 'package:easy_books/models/Sale.dart';
+import 'package:easy_books/models/Stock.dart';
+import 'package:easy_books/models/Threshold.dart';
+import 'package:easy_books/models/User.dart';
+import 'package:easy_books/models/Version.dart';
 
 class DatabaseService {
   static Isar? _isar;
@@ -32,6 +35,9 @@ class DatabaseService {
         StockSchema,
         LogSchema,
         VersionSchema,
+        ThresholdSchema,
+        AdminDataSchema,
+        PermissionsSchema,
       ],
       directory: dir.path,
     );

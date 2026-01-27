@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
-import 'package:serkohob/models/User.dart';
-import 'package:serkohob/services/database_service.dart';
+import 'package:easy_books/models/User.dart';
+import 'package:easy_books/services/database_service.dart';
 
 class UserRepository {
   Future<User?> findUserByCredentials(String username, String password) async {

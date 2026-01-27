@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
-import 'package:serkohob/models/Refund.dart';
-import 'package:serkohob/services/database_service.dart';
+import 'package:easy_books/models/Refund.dart';
+import 'package:easy_books/services/database_service.dart';
 
 class RefundRepository {
   Stream<List<Refund>>? _refundsStream;

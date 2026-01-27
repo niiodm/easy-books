@@ -1,9 +1,9 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_books/app/sales/SalesHelper.dart';
 import 'package:easy_books/app/stock/StockHelper.dart';
 import 'package:easy_books/app/widgets/autocomplete/ProductAutoComplete.dart';
-import 'package:easy_books/models/ModelProvider.dart';
+import 'package:easy_books/models/Product.dart';
+import 'package:easy_books/models/Sale.dart';
 import 'package:easy_books/util/dialog.dart';
 
 class AddSaleWidget extends StatefulWidget {
@@ -81,14 +81,13 @@ class _AddSaleWidgetState extends State<AddSaleWidget> with SalesHelper {
     final quantity = double.tryParse(_quantity.text) ?? 0.0;
 
     final sale = Sale(
-      product: product!,
+      productId: product!.id,
       price: product!.price,
       quantity: quantity,
-      time: TemporalDateTime.now(),
-      saleProductId: product!.id,
+      time: DateTime.now(),
     );
 
-    if (!validateSale(sale)) {
+    if (!validateSale(sale, product!)) {
       await alert(
         context: context,
         title: 'Error',

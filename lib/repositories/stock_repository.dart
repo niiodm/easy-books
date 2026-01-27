@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
-import 'package:serkohob/models/Stock.dart';
-import 'package:serkohob/services/database_service.dart';
+import 'package:easy_books/models/Stock.dart';
+import 'package:easy_books/services/database_service.dart';
 
 class StockRepository {
   Future<List<Stock>> getStocks() async {

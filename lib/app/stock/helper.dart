@@ -1,9 +1,9 @@
 import 'package:isar/isar.dart';
-import 'package:serkohob/models/Category.dart';
-import 'package:serkohob/models/Product.dart';
-import 'package:serkohob/models/Stock.dart';
-import 'package:serkohob/repositories/product_repository.dart';
-import 'package:serkohob/repositories/stock_repository.dart';
+import 'package:easy_books/models/Category.dart';
+import 'package:easy_books/models/Product.dart';
+import 'package:easy_books/models/Stock.dart';
+import 'package:easy_books/repositories/product_repository.dart';
+import 'package:easy_books/repositories/stock_repository.dart';
 
 class StockHelper {
   final ProductRepository _productRepository = ProductRepository();

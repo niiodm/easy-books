@@ -1,4 +1,3 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_books/app/expenses/add/AddExpenseWidget.dart';
 import 'package:easy_books/app/expenses/ExpensesHelper.dart';
@@ -52,8 +51,8 @@ class _ExpensesWidgetState extends State<ExpensesWidget> with ExpensesHelper {
                         ),
                       ),
                       subtitle: Text(
-                        '${formatDate(TemporalDateTime(dateRange.start))} '
-                        'to ${formatDate(TemporalDateTime(dateRange.end))}',
+                        '${formatDate(dateRange.start)} '
+                        'to ${formatDate(dateRange.end)}',
                       ),
                       trailing: TextButton.icon(
                         onPressed: selectDate,

@@ -1,9 +1,9 @@
-import 'package:serkohob/app/stock/helper.dart';
-import 'package:serkohob/models/Product.dart';
-import 'package:serkohob/models/Receipt.dart';
-import 'package:serkohob/models/Sale.dart';
-import 'package:serkohob/repositories/product_repository.dart';
-import 'package:serkohob/repositories/sale_repository.dart';
+import 'package:easy_books/app/stock/helper.dart';
+import 'package:easy_books/models/Product.dart';
+import 'package:easy_books/models/Receipt.dart';
+import 'package:easy_books/models/Sale.dart';
+import 'package:easy_books/repositories/product_repository.dart';
+import 'package:easy_books/repositories/sale_repository.dart';
 
 class SalesHelper {
   final SaleRepository _saleRepository = SaleRepository();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:serkohob/app/auth/helper.dart';
-import 'package:serkohob/models/Log.dart';
-import 'package:serkohob/repositories/log_repository.dart';
+import 'package:easy_books/app/auth/helper.dart';
+import 'package:easy_books/models/Log.dart';
+import 'package:easy_books/repositories/log_repository.dart';
 
 class LogHelper {
   static final LogRepository _logRepository = LogRepository();

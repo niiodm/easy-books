@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
-import 'package:serkohob/models/Log.dart';
-import 'package:serkohob/services/database_service.dart';
+import 'package:easy_books/models/Log.dart';
+import 'package:easy_books/services/database_service.dart';
 
 class LogRepository {
   Stream<List<Log>>? _logsStream;

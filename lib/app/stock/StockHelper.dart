@@ -1,65 +1,66 @@
-import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:easy_books/models/ModelProvider.dart';
+import 'package:isar/isar.dart';
 import 'package:easy_books/models/Category.dart' as model;
+import 'package:easy_books/models/Product.dart';
+import 'package:easy_books/models/Stock.dart';
+import 'package:easy_books/models/Threshold.dart';
+import 'package:easy_books/repositories/product_repository.dart';
+import 'package:easy_books/repositories/stock_repository.dart';
+import 'package:easy_books/repositories/threshold_repository.dart';
 
 class StockHelper {
+  final ProductRepository _productRepository = ProductRepository();
+  final CategoryRepository _categoryRepository = CategoryRepository();
+  final StockRepository _stockRepository = StockRepository();
+  final ThresholdRepository _thresholdRepository = ThresholdRepository();
+
   Future<List<Product>> getProducts() {
-    return Amplify.DataStore.query(Product.classType,
-        sortBy: [Product.NAME.ascending()]);
+    return _productRepository.getProducts();
   }
 
   Future<void> deleteProduct(Product product) {
-    return Amplify.DataStore.delete(product);
+    return _productRepository.deleteProduct(product.id);
   }
 
   Future<List<Stock>> getStocks() {
-    return Amplify.DataStore.query(Stock.classType);
+    return _stockRepository.getStocks();
   }
 
   Future<void> restoreStock(Stock stock) {
-    return Amplify.DataStore.save(stock);
+    return _stockRepository.save(stock);
   }
 
-  Future<Product?> getProductByID(String id) async {
-    final products = await Amplify.DataStore.query(
-      Product.classType,
-      where: Product.ID.eq(id),
-    );
-    return products.first;
+  Future<Product?> getProductByID(Id id) async {
+    return await _productRepository.getProductById(id);
   }
 
   Future<List<Product>> getProductsByCategory(model.Category category) {
-    return Amplify.DataStore.query(Product.classType,
-        where: Product.CATEGORYID.eq(category.id),
-        sortBy: [Product.NAME.ascending()]);
+    return _productRepository.getProductsByCategory(category.id);
   }
 
   Future<void> saveProduct(Product product) {
-    return Amplify.DataStore.save(product);
+    return _productRepository.saveProduct(product);
   }
 
   Future<void> saveThreshold(Threshold threshold) {
-    return Amplify.DataStore.save(threshold);
+    return _thresholdRepository.save(threshold);
   }
 
   Future<void> saveCategory(model.Category category) {
-    return Amplify.DataStore.save(category);
+    return _categoryRepository.saveCategory(category);
   }
 
-  Stream productStream() {
-    return Amplify.DataStore.observeQuery(Product.classType);
+  Stream<List<Product>> productStream() {
+    return _productRepository.watchProducts();
   }
 
-  Stream<QuerySnapshot<model.Category>> categoryStream() {
-    return Amplify.DataStore.observeQuery(
-      model.Category.classType,
-      sortBy: [model.Category.NAME.ascending()],
-    );
+  Stream<List<model.Category>> categoryStream() async* {
+    final categories = await _categoryRepository.getCategories();
+    yield categories;
+    // Note: For real-time updates, we'd need to add watchCategories to CategoryRepository
   }
 
   Future<List<model.Category>> getCategories() {
-    return Amplify.DataStore.query(model.Category.classType,
-        sortBy: [model.Category.NAME.ascending()]);
+    return _categoryRepository.getCategories();
   }
 
   bool validateProduct(Product product) {
@@ -67,48 +68,43 @@ class StockHelper {
   }
 
   Future<void> addToProductQuantity(Product product) async {
-    final oldProduct = (await Amplify.DataStore.query(
-      Product.classType,
-      where: Product.ID.eq(product.id),
-    ))
-        .first;
-    final updatedProduct =
-        oldProduct.copyWith(quantity: product.quantity + oldProduct.quantity);
-
-    final stockHelper = StockHelper();
-    stockHelper.updateStock(updatedProduct, updatedProduct.quantity);
-    return Amplify.DataStore.save(updatedProduct);
+    final oldProduct = await _productRepository.getProductById(product.id);
+    if (oldProduct != null) {
+      final updatedProduct = oldProduct.copyWith(
+        quantity: product.quantity + oldProduct.quantity,
+      );
+      await _productRepository.saveProduct(updatedProduct);
+      await updateStock(updatedProduct, updatedProduct.quantity);
+    }
   }
 
   Future<void> subtractFromProductQuantity(Product product) async {
-    final oldProduct = (await Amplify.DataStore.query(
-      Product.classType,
-      where: Product.ID.eq(product.id),
-    ))
-        .first;
-    final updatedProduct =
-        oldProduct.copyWith(quantity: oldProduct.quantity - product.quantity);
-    return Amplify.DataStore.save(updatedProduct);
+    final oldProduct = await _productRepository.getProductById(product.id);
+    if (oldProduct != null) {
+      final updatedProduct = oldProduct.copyWith(
+        quantity: oldProduct.quantity - product.quantity,
+      );
+      await _productRepository.saveProduct(updatedProduct);
+    }
   }
 
   Future<void> updateStock(Product product, double quantity) async {
-    final stocks = await Amplify.DataStore.query(Stock.classType,
-        where: Stock.PRODUCTNAME.eq(product.name));
+    final stocks = await _stockRepository.getStocksByProductName(product.name);
 
     if (stocks.isEmpty) {
-      return Amplify.DataStore.save(
+      await _stockRepository.save(
         Stock(
           quantity: quantity,
           productName: product.name,
-          date: TemporalDate.now(),
+          date: DateTime.now(),
         ),
       );
+    } else {
+      final stock = stocks.first;
+      await _stockRepository.save(
+        stock.copyWith(quantity: quantity),
+      );
     }
-
-    final stock = stocks.first;
-    return Amplify.DataStore.save(
-      stock.copyWith(quantity: quantity),
-    );
   }
 
   double sumProductValues(List<Product> products) {
@@ -120,11 +116,6 @@ class StockHelper {
   }
 
   Future<Threshold?> getThresholdByProduct(Product product) async {
-    final thresholds = await Amplify.DataStore.query(
-      Threshold.classType,
-      where: Threshold.THRESHOLDPRODUCTID.eq(product.id),
-    );
-
-    return thresholds.isNotEmpty ? thresholds.first : null;
+    return await _thresholdRepository.getThresholdByProductId(product.id);
   }
 }

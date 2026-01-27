@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:serkohob/app/refunds/helper.dart';
-import 'package:serkohob/models/Product.dart';
-import 'package:serkohob/models/Refund.dart';
-import 'package:serkohob/repositories/product_repository.dart';
-import 'package:serkohob/util/numbers.dart';
-import 'package:serkohob/util/temporal.dart';
+import 'package:easy_books/app/refunds/helper.dart';
+import 'package:easy_books/models/Product.dart';
+import 'package:easy_books/models/Refund.dart';
+import 'package:easy_books/repositories/product_repository.dart';
+import 'package:easy_books/util/numbers.dart';
+import 'package:easy_books/util/temporal.dart';
 
 class RefundsWidget extends StatefulWidget {
   const RefundsWidget({Key? key}) : super(key: key);

@@ -33,7 +33,7 @@ class SettingsWidget extends StatelessWidget {
     SettingsItem(
       title: 'Check for updates',
       iconData: Icons.download,
-      action: (context) => navigateTo(const UpdateWidget(), context),
+      action: (context) => navigateTo(UpdateWidget(), context),
     ),
     SettingsItem(
       title: 'Logout User',

@@ -1,5 +1,5 @@
-import 'package:serkohob/models/User.dart';
-import 'package:serkohob/repositories/user_repository.dart';
+import 'package:easy_books/models/User.dart';
+import 'package:easy_books/repositories/user_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {

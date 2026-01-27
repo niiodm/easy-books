@@ -1,14 +1,13 @@
-import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:easy_books/app/auth/add/AddUserWidget.dart';
 import 'package:easy_books/app/auth/edit/EditUserWidget.dart';
 import 'package:easy_books/app/auth/UserHelper.dart';
 import 'package:easy_books/app/loader/LoaderWidget.dart';
-import 'package:easy_books/models/ModelProvider.dart';
+import 'package:easy_books/models/User.dart';
 import 'package:easy_books/util/navigation.dart';
 import 'package:flutter/material.dart';
 
 class ManageUsersWidget extends StatelessWidget with UserHelper {
-  const ManageUsersWidget({Key? key}) : super(key: key);
+  ManageUsersWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +20,14 @@ class ManageUsersWidget extends StatelessWidget with UserHelper {
         label: const Text('Add Staff'),
         onPressed: () => navigateTo(const AddUserWidget(), context),
       ),
-      body: StreamBuilder<QuerySnapshot<User>>(
+      body: StreamBuilder<List<User>>(
         stream: usersStream(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const LoaderWidget();
           }
 
-          final users = snapshot.hasData ? snapshot.data!.items : <User>[];
+          final users = snapshot.data ?? <User>[];
           return buildListView(users, context);
         },
       ),

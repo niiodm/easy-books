@@ -1,5 +1,5 @@
-import 'package:serkohob/app/auth/auth_service.dart';
-import 'package:serkohob/models/User.dart';
+import 'package:easy_books/app/auth/auth_service.dart';
+import 'package:easy_books/models/User.dart';
 
 class UserHelper {
   static User get user {

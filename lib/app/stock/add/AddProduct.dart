@@ -140,8 +140,7 @@ class _AddProductState extends State<AddProduct> with StockHelper {
 
     final threshold = eb.Threshold(
       quantity: double.tryParse(this.threshold.text) ?? 0,
-      product: product,
-      thresholdProductId: product.id,
+      productId: product.id,
     );
 
     await saveThreshold(threshold);

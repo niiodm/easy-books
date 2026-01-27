@@ -19,9 +19,9 @@ class SalesReportWidget extends StatelessWidget {
             ],
           ),
         ),
-        body: const TabBarView(children: [
-          DailySalesReportWidget(),
-          MonthlySalesReportWidget(),
+        body: TabBarView(children: [
+          DailySalesReportWidget(key: const ValueKey('daily')),
+          MonthlySalesReportWidget(key: ValueKey('monthly')),
         ]),
       ),
     );
