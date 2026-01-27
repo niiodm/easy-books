@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:serkohob/app/auth/auth_service.dart';
-import 'package:serkohob/app/auth/login.dart';
-import 'package:serkohob/constants.dart' as constants;
-import 'package:serkohob/services/database_service.dart';
+import 'package:easy_books/app/AmplifyApp.dart';
+import 'package:easy_books/app/auth/StaffLoginWidget.dart';
+import 'package:easy_books/constants.dart' as constants;
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // Initialize database
-  await DatabaseService.instance;
-  // Restore session if exists
-  await AuthService.restoreSession();
-  runApp(MyApp());
+void main() {
+  runApp(const AmplifyApp(
+    child: MyApp(),
+    localOnly: true,
+  ));
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,7 +27,8 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         primarySwatch: constants.themeColor
       ),
-      home: LoginWidget(),
+      // builder: Authenticator.builder(),
+      home: const StaffLoginWidget(),
     );
   }
 }

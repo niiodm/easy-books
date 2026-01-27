@@ -1,0 +1,998 @@
+
+type AdminData @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  key: String!
+  value: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+enum StaffPermissions {
+  CREATE_PRODUCTS
+  CREATE_CATEGORIES
+  VIEW_LOGS
+  CREATE_STAFF
+  VIEW_REPORTS
+  ADD_STOCK
+  RECORD_EXPENSE
+  RECORD_SALE
+  VIEW_STOCKS_VALUE
+}
+
+type Permissions @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  permissions: [StaffPermissions!]
+  user: User!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  permissionsUserId: ID!
+  owner: String
+}
+
+type Threshold @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  quantity: Float!
+  product: Product!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  thresholdProductId: ID!
+  owner: String
+}
+
+type Expense @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  description: String!
+  amount: Float!
+  time: AWSDateTime!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  owner: String
+}
+
+type Receipt @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  customer: String
+  time: AWSDateTime!
+  sales(filter: ModelSaleFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelSaleConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  owner: String
+}
+
+type Sale @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  time: AWSDateTime!
+  quantity: Float!
+  price: Float!
+  product: Product!
+  receiptID: ID
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  saleProductId: ID!
+  owner: String
+}
+
+type Stock @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  quantity: Float!
+  productName: String!
+  date: AWSDate!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  owner: String
+}
+
+type User @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  username: String!
+  password: String!
+  isAdmin: Boolean!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  owner: String
+}
+
+type Product @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  name: String!
+  price: Float!
+  quantity: Float!
+  categoryID: ID
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  owner: String
+}
+
+type Category @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  name: String!
+  products(filter: ModelProductFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelProductConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  owner: String
+}
+
+type Refund @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  time: AWSDateTime!
+  quantity: Float!
+  price: Float!
+  product: Product!
+  description: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  refundProductId: ID!
+  owner: String
+}
+
+type Version @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  version: Int!
+  link: AWSURL!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+}
+
+type Log @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  time: AWSDateTime!
+  log: String!
+  user: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  owner: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelAdminDataConnection @aws_iam @aws_cognito_user_pools {
+  items: [AdminData]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelAdminDataFilterInput {
+  id: ModelIDInput
+  key: ModelStringInput
+  value: ModelStringInput
+  and: [ModelAdminDataFilterInput]
+  or: [ModelAdminDataFilterInput]
+  not: ModelAdminDataFilterInput
+}
+
+type Query {
+  getAdminData(id: ID!): AdminData @aws_iam @aws_cognito_user_pools
+  listAdminData(filter: ModelAdminDataFilterInput, limit: Int, nextToken: String): ModelAdminDataConnection @aws_iam @aws_cognito_user_pools
+  syncAdminData(filter: ModelAdminDataFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelAdminDataConnection @aws_iam @aws_cognito_user_pools
+  getPermissions(id: ID!): Permissions @aws_iam @aws_cognito_user_pools
+  listPermissions(filter: ModelPermissionsFilterInput, limit: Int, nextToken: String): ModelPermissionsConnection @aws_iam @aws_cognito_user_pools
+  syncPermissions(filter: ModelPermissionsFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelPermissionsConnection @aws_iam @aws_cognito_user_pools
+  getThreshold(id: ID!): Threshold @aws_iam @aws_cognito_user_pools
+  listThresholds(filter: ModelThresholdFilterInput, limit: Int, nextToken: String): ModelThresholdConnection @aws_iam @aws_cognito_user_pools
+  syncThresholds(filter: ModelThresholdFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelThresholdConnection @aws_iam @aws_cognito_user_pools
+  getExpense(id: ID!): Expense @aws_iam @aws_cognito_user_pools
+  listExpenses(filter: ModelExpenseFilterInput, limit: Int, nextToken: String): ModelExpenseConnection @aws_iam @aws_cognito_user_pools
+  syncExpenses(filter: ModelExpenseFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelExpenseConnection @aws_iam @aws_cognito_user_pools
+  getReceipt(id: ID!): Receipt @aws_iam @aws_cognito_user_pools
+  listReceipts(filter: ModelReceiptFilterInput, limit: Int, nextToken: String): ModelReceiptConnection @aws_iam @aws_cognito_user_pools
+  syncReceipts(filter: ModelReceiptFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelReceiptConnection @aws_iam @aws_cognito_user_pools
+  getSale(id: ID!): Sale @aws_iam @aws_cognito_user_pools
+  listSales(filter: ModelSaleFilterInput, limit: Int, nextToken: String): ModelSaleConnection @aws_iam @aws_cognito_user_pools
+  syncSales(filter: ModelSaleFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelSaleConnection @aws_iam @aws_cognito_user_pools
+  getStock(id: ID!): Stock @aws_iam @aws_cognito_user_pools
+  listStocks(filter: ModelStockFilterInput, limit: Int, nextToken: String): ModelStockConnection @aws_iam @aws_cognito_user_pools
+  syncStocks(filter: ModelStockFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelStockConnection @aws_iam @aws_cognito_user_pools
+  getUser(id: ID!): User @aws_iam @aws_cognito_user_pools
+  listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection @aws_iam @aws_cognito_user_pools
+  syncUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelUserConnection @aws_iam @aws_cognito_user_pools
+  getProduct(id: ID!): Product @aws_iam @aws_cognito_user_pools
+  listProducts(filter: ModelProductFilterInput, limit: Int, nextToken: String): ModelProductConnection @aws_iam @aws_cognito_user_pools
+  syncProducts(filter: ModelProductFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelProductConnection @aws_iam @aws_cognito_user_pools
+  getCategory(id: ID!): Category @aws_iam @aws_cognito_user_pools
+  listCategories(filter: ModelCategoryFilterInput, limit: Int, nextToken: String): ModelCategoryConnection @aws_iam @aws_cognito_user_pools
+  syncCategories(filter: ModelCategoryFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCategoryConnection @aws_iam @aws_cognito_user_pools
+  getRefund(id: ID!): Refund @aws_iam @aws_cognito_user_pools
+  listRefunds(filter: ModelRefundFilterInput, limit: Int, nextToken: String): ModelRefundConnection @aws_iam @aws_cognito_user_pools
+  syncRefunds(filter: ModelRefundFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelRefundConnection @aws_iam @aws_cognito_user_pools
+  getVersion(id: ID!): Version @aws_iam @aws_cognito_user_pools
+  listVersions(filter: ModelVersionFilterInput, limit: Int, nextToken: String): ModelVersionConnection @aws_iam @aws_cognito_user_pools
+  syncVersions(filter: ModelVersionFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelVersionConnection @aws_iam @aws_cognito_user_pools
+  getLog(id: ID!): Log @aws_iam @aws_cognito_user_pools
+  listLogs(filter: ModelLogFilterInput, limit: Int, nextToken: String): ModelLogConnection @aws_iam @aws_cognito_user_pools
+  syncLogs(filter: ModelLogFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelLogConnection @aws_iam @aws_cognito_user_pools
+}
+
+input ModelAdminDataConditionInput {
+  key: ModelStringInput
+  value: ModelStringInput
+  and: [ModelAdminDataConditionInput]
+  or: [ModelAdminDataConditionInput]
+  not: ModelAdminDataConditionInput
+}
+
+input CreateAdminDataInput {
+  id: ID
+  key: String!
+  value: String!
+  _version: Int
+}
+
+input UpdateAdminDataInput {
+  id: ID!
+  key: String
+  value: String
+  _version: Int
+}
+
+input DeleteAdminDataInput {
+  id: ID!
+  _version: Int
+}
+
+type Mutation {
+  createAdminData(input: CreateAdminDataInput!, condition: ModelAdminDataConditionInput): AdminData @aws_iam @aws_cognito_user_pools
+  updateAdminData(input: UpdateAdminDataInput!, condition: ModelAdminDataConditionInput): AdminData @aws_iam @aws_cognito_user_pools
+  deleteAdminData(input: DeleteAdminDataInput!, condition: ModelAdminDataConditionInput): AdminData @aws_iam @aws_cognito_user_pools
+  createPermissions(input: CreatePermissionsInput!, condition: ModelPermissionsConditionInput): Permissions @aws_iam @aws_cognito_user_pools
+  updatePermissions(input: UpdatePermissionsInput!, condition: ModelPermissionsConditionInput): Permissions @aws_iam @aws_cognito_user_pools
+  deletePermissions(input: DeletePermissionsInput!, condition: ModelPermissionsConditionInput): Permissions @aws_iam @aws_cognito_user_pools
+  createThreshold(input: CreateThresholdInput!, condition: ModelThresholdConditionInput): Threshold @aws_iam @aws_cognito_user_pools
+  updateThreshold(input: UpdateThresholdInput!, condition: ModelThresholdConditionInput): Threshold @aws_iam @aws_cognito_user_pools
+  deleteThreshold(input: DeleteThresholdInput!, condition: ModelThresholdConditionInput): Threshold @aws_iam @aws_cognito_user_pools
+  createExpense(input: CreateExpenseInput!, condition: ModelExpenseConditionInput): Expense @aws_iam @aws_cognito_user_pools
+  updateExpense(input: UpdateExpenseInput!, condition: ModelExpenseConditionInput): Expense @aws_iam @aws_cognito_user_pools
+  deleteExpense(input: DeleteExpenseInput!, condition: ModelExpenseConditionInput): Expense @aws_iam @aws_cognito_user_pools
+  createReceipt(input: CreateReceiptInput!, condition: ModelReceiptConditionInput): Receipt @aws_iam @aws_cognito_user_pools
+  updateReceipt(input: UpdateReceiptInput!, condition: ModelReceiptConditionInput): Receipt @aws_iam @aws_cognito_user_pools
+  deleteReceipt(input: DeleteReceiptInput!, condition: ModelReceiptConditionInput): Receipt @aws_iam @aws_cognito_user_pools
+  createSale(input: CreateSaleInput!, condition: ModelSaleConditionInput): Sale @aws_iam @aws_cognito_user_pools
+  updateSale(input: UpdateSaleInput!, condition: ModelSaleConditionInput): Sale @aws_iam @aws_cognito_user_pools
+  deleteSale(input: DeleteSaleInput!, condition: ModelSaleConditionInput): Sale @aws_iam @aws_cognito_user_pools
+  createStock(input: CreateStockInput!, condition: ModelStockConditionInput): Stock @aws_iam @aws_cognito_user_pools
+  updateStock(input: UpdateStockInput!, condition: ModelStockConditionInput): Stock @aws_iam @aws_cognito_user_pools
+  deleteStock(input: DeleteStockInput!, condition: ModelStockConditionInput): Stock @aws_iam @aws_cognito_user_pools
+  createUser(input: CreateUserInput!, condition: ModelUserConditionInput): User @aws_iam @aws_cognito_user_pools
+  updateUser(input: UpdateUserInput!, condition: ModelUserConditionInput): User @aws_iam @aws_cognito_user_pools
+  deleteUser(input: DeleteUserInput!, condition: ModelUserConditionInput): User @aws_iam @aws_cognito_user_pools
+  createProduct(input: CreateProductInput!, condition: ModelProductConditionInput): Product @aws_iam @aws_cognito_user_pools
+  updateProduct(input: UpdateProductInput!, condition: ModelProductConditionInput): Product @aws_iam @aws_cognito_user_pools
+  deleteProduct(input: DeleteProductInput!, condition: ModelProductConditionInput): Product @aws_iam @aws_cognito_user_pools
+  createCategory(input: CreateCategoryInput!, condition: ModelCategoryConditionInput): Category @aws_iam @aws_cognito_user_pools
+  updateCategory(input: UpdateCategoryInput!, condition: ModelCategoryConditionInput): Category @aws_iam @aws_cognito_user_pools
+  deleteCategory(input: DeleteCategoryInput!, condition: ModelCategoryConditionInput): Category @aws_iam @aws_cognito_user_pools
+  createRefund(input: CreateRefundInput!, condition: ModelRefundConditionInput): Refund @aws_iam @aws_cognito_user_pools
+  updateRefund(input: UpdateRefundInput!, condition: ModelRefundConditionInput): Refund @aws_iam @aws_cognito_user_pools
+  deleteRefund(input: DeleteRefundInput!, condition: ModelRefundConditionInput): Refund @aws_iam @aws_cognito_user_pools
+  createVersion(input: CreateVersionInput!, condition: ModelVersionConditionInput): Version @aws_iam
+  updateVersion(input: UpdateVersionInput!, condition: ModelVersionConditionInput): Version @aws_iam
+  deleteVersion(input: DeleteVersionInput!, condition: ModelVersionConditionInput): Version @aws_iam
+  createLog(input: CreateLogInput!, condition: ModelLogConditionInput): Log @aws_iam @aws_cognito_user_pools
+  updateLog(input: UpdateLogInput!, condition: ModelLogConditionInput): Log @aws_iam @aws_cognito_user_pools
+  deleteLog(input: DeleteLogInput!, condition: ModelLogConditionInput): Log @aws_iam @aws_cognito_user_pools
+}
+
+type Subscription {
+  onCreateAdminData: AdminData @aws_subscribe(mutations: ["createAdminData"]) @aws_iam @aws_cognito_user_pools
+  onUpdateAdminData: AdminData @aws_subscribe(mutations: ["updateAdminData"]) @aws_iam @aws_cognito_user_pools
+  onDeleteAdminData: AdminData @aws_subscribe(mutations: ["deleteAdminData"]) @aws_iam @aws_cognito_user_pools
+  onCreatePermissions(owner: String): Permissions @aws_subscribe(mutations: ["createPermissions"]) @aws_iam @aws_cognito_user_pools
+  onUpdatePermissions(owner: String): Permissions @aws_subscribe(mutations: ["updatePermissions"]) @aws_iam @aws_cognito_user_pools
+  onDeletePermissions(owner: String): Permissions @aws_subscribe(mutations: ["deletePermissions"]) @aws_iam @aws_cognito_user_pools
+  onCreateThreshold(owner: String): Threshold @aws_subscribe(mutations: ["createThreshold"]) @aws_iam @aws_cognito_user_pools
+  onUpdateThreshold(owner: String): Threshold @aws_subscribe(mutations: ["updateThreshold"]) @aws_iam @aws_cognito_user_pools
+  onDeleteThreshold(owner: String): Threshold @aws_subscribe(mutations: ["deleteThreshold"]) @aws_iam @aws_cognito_user_pools
+  onCreateExpense(owner: String): Expense @aws_subscribe(mutations: ["createExpense"]) @aws_iam @aws_cognito_user_pools
+  onUpdateExpense(owner: String): Expense @aws_subscribe(mutations: ["updateExpense"]) @aws_iam @aws_cognito_user_pools
+  onDeleteExpense(owner: String): Expense @aws_subscribe(mutations: ["deleteExpense"]) @aws_iam @aws_cognito_user_pools
+  onCreateReceipt(owner: String): Receipt @aws_subscribe(mutations: ["createReceipt"]) @aws_iam @aws_cognito_user_pools
+  onUpdateReceipt(owner: String): Receipt @aws_subscribe(mutations: ["updateReceipt"]) @aws_iam @aws_cognito_user_pools
+  onDeleteReceipt(owner: String): Receipt @aws_subscribe(mutations: ["deleteReceipt"]) @aws_iam @aws_cognito_user_pools
+  onCreateSale(owner: String): Sale @aws_subscribe(mutations: ["createSale"]) @aws_iam @aws_cognito_user_pools
+  onUpdateSale(owner: String): Sale @aws_subscribe(mutations: ["updateSale"]) @aws_iam @aws_cognito_user_pools
+  onDeleteSale(owner: String): Sale @aws_subscribe(mutations: ["deleteSale"]) @aws_iam @aws_cognito_user_pools
+  onCreateStock(owner: String): Stock @aws_subscribe(mutations: ["createStock"]) @aws_iam @aws_cognito_user_pools
+  onUpdateStock(owner: String): Stock @aws_subscribe(mutations: ["updateStock"]) @aws_iam @aws_cognito_user_pools
+  onDeleteStock(owner: String): Stock @aws_subscribe(mutations: ["deleteStock"]) @aws_iam @aws_cognito_user_pools
+  onCreateUser(owner: String): User @aws_subscribe(mutations: ["createUser"]) @aws_iam @aws_cognito_user_pools
+  onUpdateUser(owner: String): User @aws_subscribe(mutations: ["updateUser"]) @aws_iam @aws_cognito_user_pools
+  onDeleteUser(owner: String): User @aws_subscribe(mutations: ["deleteUser"]) @aws_iam @aws_cognito_user_pools
+  onCreateProduct(owner: String): Product @aws_subscribe(mutations: ["createProduct"]) @aws_iam @aws_cognito_user_pools
+  onUpdateProduct(owner: String): Product @aws_subscribe(mutations: ["updateProduct"]) @aws_iam @aws_cognito_user_pools
+  onDeleteProduct(owner: String): Product @aws_subscribe(mutations: ["deleteProduct"]) @aws_iam @aws_cognito_user_pools
+  onCreateCategory(owner: String): Category @aws_subscribe(mutations: ["createCategory"]) @aws_iam @aws_cognito_user_pools
+  onUpdateCategory(owner: String): Category @aws_subscribe(mutations: ["updateCategory"]) @aws_iam @aws_cognito_user_pools
+  onDeleteCategory(owner: String): Category @aws_subscribe(mutations: ["deleteCategory"]) @aws_iam @aws_cognito_user_pools
+  onCreateRefund(owner: String): Refund @aws_subscribe(mutations: ["createRefund"]) @aws_iam @aws_cognito_user_pools
+  onUpdateRefund(owner: String): Refund @aws_subscribe(mutations: ["updateRefund"]) @aws_iam @aws_cognito_user_pools
+  onDeleteRefund(owner: String): Refund @aws_subscribe(mutations: ["deleteRefund"]) @aws_iam @aws_cognito_user_pools
+  onCreateVersion: Version @aws_subscribe(mutations: ["createVersion"]) @aws_iam @aws_cognito_user_pools
+  onUpdateVersion: Version @aws_subscribe(mutations: ["updateVersion"]) @aws_iam @aws_cognito_user_pools
+  onDeleteVersion: Version @aws_subscribe(mutations: ["deleteVersion"]) @aws_iam @aws_cognito_user_pools
+  onCreateLog(owner: String): Log @aws_subscribe(mutations: ["createLog"]) @aws_iam @aws_cognito_user_pools
+  onUpdateLog(owner: String): Log @aws_subscribe(mutations: ["updateLog"]) @aws_iam @aws_cognito_user_pools
+  onDeleteLog(owner: String): Log @aws_subscribe(mutations: ["deleteLog"]) @aws_iam @aws_cognito_user_pools
+}
+
+type ModelPermissionsConnection @aws_iam @aws_cognito_user_pools {
+  items: [Permissions]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelStaffPermissionsListInput {
+  eq: [StaffPermissions]
+  ne: [StaffPermissions]
+  contains: StaffPermissions
+  notContains: StaffPermissions
+}
+
+input ModelPermissionsFilterInput {
+  id: ModelIDInput
+  permissions: ModelStaffPermissionsListInput
+  and: [ModelPermissionsFilterInput]
+  or: [ModelPermissionsFilterInput]
+  not: ModelPermissionsFilterInput
+  permissionsUserId: ModelIDInput
+}
+
+input ModelPermissionsConditionInput {
+  permissions: ModelStaffPermissionsListInput
+  and: [ModelPermissionsConditionInput]
+  or: [ModelPermissionsConditionInput]
+  not: ModelPermissionsConditionInput
+  permissionsUserId: ModelIDInput
+}
+
+input CreatePermissionsInput {
+  id: ID
+  permissions: [StaffPermissions!]
+  _version: Int
+  permissionsUserId: ID!
+}
+
+input UpdatePermissionsInput {
+  id: ID!
+  permissions: [StaffPermissions!]
+  _version: Int
+  permissionsUserId: ID!
+}
+
+input DeletePermissionsInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelThresholdConnection @aws_iam @aws_cognito_user_pools {
+  items: [Threshold]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelThresholdFilterInput {
+  id: ModelIDInput
+  quantity: ModelFloatInput
+  and: [ModelThresholdFilterInput]
+  or: [ModelThresholdFilterInput]
+  not: ModelThresholdFilterInput
+  thresholdProductId: ModelIDInput
+}
+
+input ModelThresholdConditionInput {
+  quantity: ModelFloatInput
+  and: [ModelThresholdConditionInput]
+  or: [ModelThresholdConditionInput]
+  not: ModelThresholdConditionInput
+  thresholdProductId: ModelIDInput
+}
+
+input CreateThresholdInput {
+  id: ID
+  quantity: Float!
+  _version: Int
+  thresholdProductId: ID!
+}
+
+input UpdateThresholdInput {
+  id: ID!
+  quantity: Float
+  _version: Int
+  thresholdProductId: ID!
+}
+
+input DeleteThresholdInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelExpenseConnection @aws_iam @aws_cognito_user_pools {
+  items: [Expense]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelExpenseFilterInput {
+  id: ModelIDInput
+  description: ModelStringInput
+  amount: ModelFloatInput
+  time: ModelStringInput
+  and: [ModelExpenseFilterInput]
+  or: [ModelExpenseFilterInput]
+  not: ModelExpenseFilterInput
+}
+
+input ModelExpenseConditionInput {
+  description: ModelStringInput
+  amount: ModelFloatInput
+  time: ModelStringInput
+  and: [ModelExpenseConditionInput]
+  or: [ModelExpenseConditionInput]
+  not: ModelExpenseConditionInput
+}
+
+input CreateExpenseInput {
+  id: ID
+  description: String!
+  amount: Float!
+  time: AWSDateTime!
+  _version: Int
+}
+
+input UpdateExpenseInput {
+  id: ID!
+  description: String
+  amount: Float
+  time: AWSDateTime
+  _version: Int
+}
+
+input DeleteExpenseInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelReceiptConnection @aws_iam @aws_cognito_user_pools {
+  items: [Receipt]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelReceiptFilterInput {
+  id: ModelIDInput
+  customer: ModelStringInput
+  time: ModelStringInput
+  and: [ModelReceiptFilterInput]
+  or: [ModelReceiptFilterInput]
+  not: ModelReceiptFilterInput
+}
+
+input ModelReceiptConditionInput {
+  customer: ModelStringInput
+  time: ModelStringInput
+  and: [ModelReceiptConditionInput]
+  or: [ModelReceiptConditionInput]
+  not: ModelReceiptConditionInput
+}
+
+input CreateReceiptInput {
+  id: ID
+  customer: String
+  time: AWSDateTime!
+  _version: Int
+}
+
+input UpdateReceiptInput {
+  id: ID!
+  customer: String
+  time: AWSDateTime
+  _version: Int
+}
+
+input DeleteReceiptInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelSaleConnection @aws_iam @aws_cognito_user_pools {
+  items: [Sale]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelSaleFilterInput {
+  id: ModelIDInput
+  time: ModelStringInput
+  quantity: ModelFloatInput
+  price: ModelFloatInput
+  receiptID: ModelIDInput
+  and: [ModelSaleFilterInput]
+  or: [ModelSaleFilterInput]
+  not: ModelSaleFilterInput
+  saleProductId: ModelIDInput
+}
+
+input ModelSaleConditionInput {
+  time: ModelStringInput
+  quantity: ModelFloatInput
+  price: ModelFloatInput
+  receiptID: ModelIDInput
+  and: [ModelSaleConditionInput]
+  or: [ModelSaleConditionInput]
+  not: ModelSaleConditionInput
+  saleProductId: ModelIDInput
+}
+
+input CreateSaleInput {
+  id: ID
+  time: AWSDateTime!
+  quantity: Float!
+  price: Float!
+  receiptID: ID
+  _version: Int
+  saleProductId: ID!
+}
+
+input UpdateSaleInput {
+  id: ID!
+  time: AWSDateTime
+  quantity: Float
+  price: Float
+  receiptID: ID
+  _version: Int
+  saleProductId: ID!
+}
+
+input DeleteSaleInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelStockConnection @aws_iam @aws_cognito_user_pools {
+  items: [Stock]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelStockFilterInput {
+  id: ModelIDInput
+  quantity: ModelFloatInput
+  productName: ModelStringInput
+  date: ModelStringInput
+  and: [ModelStockFilterInput]
+  or: [ModelStockFilterInput]
+  not: ModelStockFilterInput
+}
+
+input ModelStockConditionInput {
+  quantity: ModelFloatInput
+  productName: ModelStringInput
+  date: ModelStringInput
+  and: [ModelStockConditionInput]
+  or: [ModelStockConditionInput]
+  not: ModelStockConditionInput
+}
+
+input CreateStockInput {
+  id: ID
+  quantity: Float!
+  productName: String!
+  date: AWSDate!
+  _version: Int
+}
+
+input UpdateStockInput {
+  id: ID!
+  quantity: Float
+  productName: String
+  date: AWSDate
+  _version: Int
+}
+
+input DeleteStockInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelUserConnection @aws_iam @aws_cognito_user_pools {
+  items: [User]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelUserFilterInput {
+  id: ModelIDInput
+  username: ModelStringInput
+  password: ModelStringInput
+  isAdmin: ModelBooleanInput
+  and: [ModelUserFilterInput]
+  or: [ModelUserFilterInput]
+  not: ModelUserFilterInput
+}
+
+input ModelUserConditionInput {
+  username: ModelStringInput
+  password: ModelStringInput
+  isAdmin: ModelBooleanInput
+  and: [ModelUserConditionInput]
+  or: [ModelUserConditionInput]
+  not: ModelUserConditionInput
+}
+
+input CreateUserInput {
+  id: ID
+  username: String!
+  password: String!
+  isAdmin: Boolean!
+  _version: Int
+}
+
+input UpdateUserInput {
+  id: ID!
+  username: String
+  password: String
+  isAdmin: Boolean
+  _version: Int
+}
+
+input DeleteUserInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelProductConnection @aws_iam @aws_cognito_user_pools {
+  items: [Product]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelProductFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  price: ModelFloatInput
+  quantity: ModelFloatInput
+  categoryID: ModelIDInput
+  and: [ModelProductFilterInput]
+  or: [ModelProductFilterInput]
+  not: ModelProductFilterInput
+}
+
+input ModelProductConditionInput {
+  name: ModelStringInput
+  price: ModelFloatInput
+  quantity: ModelFloatInput
+  categoryID: ModelIDInput
+  and: [ModelProductConditionInput]
+  or: [ModelProductConditionInput]
+  not: ModelProductConditionInput
+}
+
+input CreateProductInput {
+  id: ID
+  name: String!
+  price: Float!
+  quantity: Float!
+  categoryID: ID
+  _version: Int
+}
+
+input UpdateProductInput {
+  id: ID!
+  name: String
+  price: Float
+  quantity: Float
+  categoryID: ID
+  _version: Int
+}
+
+input DeleteProductInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelCategoryConnection @aws_iam @aws_cognito_user_pools {
+  items: [Category]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelCategoryFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  and: [ModelCategoryFilterInput]
+  or: [ModelCategoryFilterInput]
+  not: ModelCategoryFilterInput
+}
+
+input ModelCategoryConditionInput {
+  name: ModelStringInput
+  and: [ModelCategoryConditionInput]
+  or: [ModelCategoryConditionInput]
+  not: ModelCategoryConditionInput
+}
+
+input CreateCategoryInput {
+  id: ID
+  name: String!
+  _version: Int
+}
+
+input UpdateCategoryInput {
+  id: ID!
+  name: String
+  _version: Int
+}
+
+input DeleteCategoryInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelRefundConnection @aws_iam @aws_cognito_user_pools {
+  items: [Refund]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelRefundFilterInput {
+  id: ModelIDInput
+  time: ModelStringInput
+  quantity: ModelFloatInput
+  price: ModelFloatInput
+  description: ModelStringInput
+  and: [ModelRefundFilterInput]
+  or: [ModelRefundFilterInput]
+  not: ModelRefundFilterInput
+  refundProductId: ModelIDInput
+}
+
+input ModelRefundConditionInput {
+  time: ModelStringInput
+  quantity: ModelFloatInput
+  price: ModelFloatInput
+  description: ModelStringInput
+  and: [ModelRefundConditionInput]
+  or: [ModelRefundConditionInput]
+  not: ModelRefundConditionInput
+  refundProductId: ModelIDInput
+}
+
+input CreateRefundInput {
+  id: ID
+  time: AWSDateTime!
+  quantity: Float!
+  price: Float!
+  description: String
+  _version: Int
+  refundProductId: ID!
+}
+
+input UpdateRefundInput {
+  id: ID!
+  time: AWSDateTime
+  quantity: Float
+  price: Float
+  description: String
+  _version: Int
+  refundProductId: ID!
+}
+
+input DeleteRefundInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelVersionConnection @aws_iam @aws_cognito_user_pools {
+  items: [Version]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelVersionFilterInput {
+  id: ModelIDInput
+  version: ModelIntInput
+  link: ModelStringInput
+  and: [ModelVersionFilterInput]
+  or: [ModelVersionFilterInput]
+  not: ModelVersionFilterInput
+}
+
+input ModelVersionConditionInput {
+  version: ModelIntInput
+  link: ModelStringInput
+  and: [ModelVersionConditionInput]
+  or: [ModelVersionConditionInput]
+  not: ModelVersionConditionInput
+}
+
+input CreateVersionInput {
+  id: ID
+  version: Int!
+  link: AWSURL!
+  _version: Int
+}
+
+input UpdateVersionInput {
+  id: ID!
+  version: Int
+  link: AWSURL
+  _version: Int
+}
+
+input DeleteVersionInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelLogConnection @aws_iam @aws_cognito_user_pools {
+  items: [Log]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelLogFilterInput {
+  id: ModelIDInput
+  time: ModelStringInput
+  log: ModelStringInput
+  user: ModelStringInput
+  and: [ModelLogFilterInput]
+  or: [ModelLogFilterInput]
+  not: ModelLogFilterInput
+}
+
+input ModelLogConditionInput {
+  time: ModelStringInput
+  log: ModelStringInput
+  user: ModelStringInput
+  and: [ModelLogConditionInput]
+  or: [ModelLogConditionInput]
+  not: ModelLogConditionInput
+}
+
+input CreateLogInput {
+  id: ID
+  time: AWSDateTime!
+  log: String!
+  user: String!
+  _version: Int
+}
+
+input UpdateLogInput {
+  id: ID!
+  time: AWSDateTime
+  log: String
+  user: String
+  _version: Int
+}
+
+input DeleteLogInput {
+  id: ID!
+  _version: Int
+}
+

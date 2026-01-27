@@ -1,0 +1,103 @@
+type AdminData @model @auth(rules: [{allow: private}]) {
+  id: ID!
+  key: String!
+  value: String!
+}
+
+enum StaffPermissions {
+  CREATE_PRODUCTS
+  CREATE_CATEGORIES
+  VIEW_LOGS
+  CREATE_STAFF
+  VIEW_REPORTS
+  ADD_STOCK
+  RECORD_EXPENSE
+  RECORD_SALE
+  VIEW_STOCKS_VALUE
+}
+
+type Permissions @model @auth(rules: [{allow: owner}, {allow: public, provider: iam}]) {
+  id: ID!
+  permissions: [StaffPermissions!]
+  user: User! @hasOne
+}
+
+type Threshold @model @auth(rules: [{allow: owner}, {allow: public, provider: iam}]) {
+  id: ID!
+  quantity: Float!
+  product: Product! @hasOne
+}
+
+type Expense @model @auth(rules: [{allow: owner}, {allow: private, provider: iam}]) {
+  id: ID!
+  description: String!
+  amount: Float!
+  time: AWSDateTime!
+}
+
+type Receipt @model @auth(rules: [{allow: owner}, {allow: private, provider: iam}]) {
+  id: ID!
+  customer: String
+  time: AWSDateTime!
+  sales: [Sale] @hasMany(indexName: "byReceipt", fields: ["id"])
+}
+
+type Sale @model @auth(rules: [{allow: owner}, {allow: private, provider: iam}]) {
+  id: ID!
+  time: AWSDateTime!
+  quantity: Float!
+  price: Float!
+  product: Product! @hasOne
+  receiptID: ID @index(name: "byReceipt")
+}
+
+type Stock @model @auth(rules: [{allow: owner}, {allow: private, provider: iam}]) {
+  id: ID!
+  quantity: Float!
+  productName: String!
+  date: AWSDate!
+}
+
+type User @model @auth(rules: [{allow: owner}, {allow: private, provider: iam}]) {
+  id: ID!
+  username: String!
+  password: String!
+  isAdmin: Boolean!
+}
+
+type Product @model @auth(rules: [{allow: owner}, {allow: private, provider: iam}]) {
+  id: ID!
+  name: String!
+  price: Float!
+  quantity: Float!
+  categoryID: ID @index(name: "byCategory")
+}
+
+type Category @model @auth(rules: [{allow: owner}, {allow: private, provider: iam}]) {
+  id: ID!
+  name: String!
+  products: [Product] @hasMany(indexName: "byCategory", fields: ["id"])
+}
+
+type Refund @model @auth(rules: [{allow: owner}, {allow: private, provider: iam}]) {
+  id: ID!
+  time: AWSDateTime!
+  quantity: Float!
+  price: Float!
+  product: Product! @hasOne
+  description: String
+}
+
+type Version @model @auth(rules: [{allow: private, provider: iam}, {allow: private, operations: [read]}]) {
+  id: ID!
+  version: Int!
+  link: AWSURL!
+}
+
+type Log @model @auth(rules: [{allow: owner}, {allow: private, provider: iam}]) {
+  id: ID!
+  time: AWSDateTime!
+  log: String!
+  user: String!
+}
+ 

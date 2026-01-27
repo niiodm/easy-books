@@ -1,22 +1,28 @@
+import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-String formatDateTime(DateTime time) {
-  final format = 'MMM dd y h:mm a';
-  return DateFormat(format).format(time.toLocal());
+String formatDateTime(TemporalDateTime time) {
+  const format = 'MMM dd y h:mm a';
+  return DateFormat(format).format(time.getDateTimeInUtc());
 }
 
-String formatDate(DateTime time) {
-  final format = 'MMM dd, y';
-  return DateFormat(format).format(time.toLocal());
+String formatDate(TemporalDateTime time) {
+  const format = 'MMM dd, y';
+  return DateFormat(format).format(time.getDateTimeInUtc());
 }
 
-String formatTime(DateTime time) {
-  final format = 'h:mm a';
-  return DateFormat(format).format(time.toLocal());
+String formatMonth(TemporalMonth time) {
+  const format = 'MMM y';
+  return DateFormat(format).format(time.date);
 }
 
-Future<DateTime?> selectDate(BuildContext context, {DateTime? initialDate}) async {
+String formatTime(TemporalDateTime time) {
+  const format = 'h:mm a';
+  return DateFormat(format).format(time.getDateTimeInUtc());
+}
+
+Future<DateTime?> selectDate(BuildContext context, {DateTime? initialDate} ) async {
   final firstDate = DateTime(2021);
   final lastDate = DateTime(2071);
   return showDatePicker(
@@ -27,7 +33,7 @@ Future<DateTime?> selectDate(BuildContext context, {DateTime? initialDate}) asyn
   );
 }
 
-Future<DateTimeRange?> selectDateRange(BuildContext context, {DateTime? initialDate}) async {
+Future<DateTimeRange?> selectDateRange(BuildContext context, {DateTime? initialDate} ) async {
   final firstDate = DateTime(2021);
   final lastDate = DateTime(2071);
   return showDateRangePicker(
@@ -36,4 +42,26 @@ Future<DateTimeRange?> selectDateRange(BuildContext context, {DateTime? initialD
     firstDate: firstDate,
     lastDate: lastDate,
   );
+}
+
+class TemporalMonth {
+  late int year;
+  late int month;
+  final DateTime date;
+
+  TemporalMonth(this.date) {
+    year = date.year;
+    month = date.month;
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TemporalMonth &&
+          runtimeType == other.runtimeType &&
+          year == other.year &&
+          month == other.month;
+
+  @override
+  int get hashCode => year.hashCode ^ month.hashCode;
 }

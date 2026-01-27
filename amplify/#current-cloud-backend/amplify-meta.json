@@ -1,0 +1,115 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-easybooks-main-83400-authRole",
+      "UnauthRoleArn": "arn:aws:iam::949105599604:role/amplify-easybooks-main-83400-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::949105599604:role/amplify-easybooks-main-83400-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-easybooks-main-83400-deployment",
+      "UnauthRoleName": "amplify-easybooks-main-83400-unauthRole",
+      "StackName": "amplify-easybooks-main-83400",
+      "StackId": "arn:aws:cloudformation:us-east-1:949105599604:stack/amplify-easybooks-main-83400/b40e0980-a43a-11ec-b884-0eebaf054239",
+      "AmplifyAppId": "d2yenixhast1m4"
+    }
+  },
+  "api": {
+    "easybooks": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "autheasybooks"
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
+        },
+        "GraphQLAPIIdOutput": "odp7vyaxs5fyvjiixud24vij24",
+        "GraphQLAPIEndpointOutput": "https://pwthmz7bnjcopdkjkojc2bvhxu.appsync-api.us-east-1.amazonaws.com/graphql"
+      },
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "easybooks",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ],
+      "lastPushTimeStamp": "2022-05-29T07:16:49.209Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-easybooks-main-83400-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apieasybooks"
+      },
+      "lastPushDirHash": "oRD9+PmfQdK2IbVcRtfUgiS0fZ8="
+    }
+  },
+  "auth": {
+    "easybooks": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [
+          "PHONE_NUMBER"
+        ],
+        "signupAttributes": [
+          "PHONE_NUMBER"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 6,
+          "passwordPolicyCharacters": [
+            "REQUIRES_LOWERCASE",
+            "REQUIRES_NUMBERS"
+          ]
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "PHONE_NUMBER"
+        ]
+      },
+      "output": {
+        "CreatedSNSRole": "arn:aws:iam::949105599604:role/snsb6f2469a83400-main",
+        "UserPoolId": "us-east-1_m7V3ZpCan",
+        "AppClientIDWeb": "1mbh4vihpg4g1dmig9rnbsjqkv",
+        "AppClientID": "60eb1cb2ghmnlc5k4n1rdtp9h7",
+        "IdentityPoolId": "us-east-1:876f3f19-c146-42d2-a147-d83ca385656a",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:949105599604:userpool/us-east-1_m7V3ZpCan",
+        "IdentityPoolName": "testAuthIdentityPool__main",
+        "UserPoolName": "easybooks"
+      },
+      "lastPushTimeStamp": "2022-05-29T07:16:49.155Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-easybooks-main-83400-deployment/amplify-cfn-templates/auth/easybooks-cloudformation-template.json",
+        "logicalId": "autheasybooks"
+      }
+    }
+  },
+  "storage": {
+    "easybooks": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "output": {
+        "BucketName": "easybooks83400-main",
+        "Region": "us-east-1"
+      },
+      "lastPushTimeStamp": "2022-05-29T07:16:49.157Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-easybooks-main-83400-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "logicalId": "storageeasybooks"
+      }
+    }
+  }
+}

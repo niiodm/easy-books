@@ -1,0 +1,19 @@
+{
+    "AppSyncApiName": "easybooks",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "autheasybooks",
+            "Outputs.UserPoolId"
+        ]
+    },
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "S3DeploymentBucket": "amplify-easybooks-main-83400-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/37ad78095fbc9063618d17c098fc2009889998d7"
+}

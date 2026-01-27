@@ -1,0 +1,14 @@
+{
+  "resourceName": "easybooks",
+  "policyUUID": "e4431c5f",
+  "bucketName": "easybooks",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "READ"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

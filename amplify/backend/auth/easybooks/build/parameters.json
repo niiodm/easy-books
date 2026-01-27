@@ -1,0 +1,62 @@
+{
+  "identityPoolName": "testAuthIdentityPool",
+  "allowUnauthenticatedIdentities": true,
+  "resourceNameTruncated": "easybob6f2469a",
+  "userPoolName": "easybooks",
+  "autoVerifiedAttributes": [
+    "phone_number"
+  ],
+  "mfaConfiguration": "OFF",
+  "mfaTypes": [
+    "SMS Text Message"
+  ],
+  "smsAuthenticationMessage": "Your authentication code is {####}",
+  "smsVerificationMessage": "Forgot password code: {####}",
+  "emailVerificationSubject": "Your verification code",
+  "emailVerificationMessage": "Your verification code is {####}",
+  "defaultPasswordPolicy": false,
+  "passwordPolicyMinLength": 6,
+  "passwordPolicyCharacters": [
+    "Requires Lowercase",
+    "Requires Numbers"
+  ],
+  "requiredAttributes": [
+    "phone_number"
+  ],
+  "aliasAttributes": [],
+  "userpoolClientGenerateSecret": false,
+  "userpoolClientRefreshTokenValidity": 30,
+  "userpoolClientWriteAttributes": [],
+  "userpoolClientReadAttributes": [],
+  "userpoolClientLambdaRole": "easybob6f2469a_userpoolclient_lambda_role",
+  "userpoolClientSetAttributes": false,
+  "sharedId": "b6f2469a",
+  "resourceName": "easybooks",
+  "authSelections": "identityPoolAndUserPool",
+  "serviceName": "Cognito",
+  "usernameAttributes": [
+    "phone_number"
+  ],
+  "useDefault": "manual",
+  "userPoolGroups": false,
+  "userPoolGroupList": [],
+  "adminQueries": false,
+  "thirdPartyAuth": false,
+  "authProviders": [],
+  "usernameCaseSensitive": false,
+  "useEnabledMfas": true,
+  "authRoleArn": {
+    "Fn::GetAtt": [
+      "AuthRole",
+      "Arn"
+    ]
+  },
+  "unauthRoleArn": {
+    "Fn::GetAtt": [
+      "UnauthRole",
+      "Arn"
+    ]
+  },
+  "breakCircularDependency": true,
+  "dependsOn": []
+}
