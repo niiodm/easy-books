@@ -1,3 +1,4 @@
+import 'package:isar/isar.dart';
 import 'package:serkohob/models/Category.dart';
 import 'package:serkohob/models/Product.dart';
 import 'package:serkohob/models/Stock.dart';
@@ -23,6 +24,18 @@ class StockHelper {
 
   Future<List<Category>> getCategories() {
     return _categoryRepository.getCategories();
+  }
+
+  Future<void> saveCategory(Category category) {
+    return _categoryRepository.saveCategory(category);
+  }
+
+  Future<void> deleteCategory(Id id) {
+    return _categoryRepository.deleteCategory(id);
+  }
+
+  Future<List<Product>> getProductsByCategory(int categoryID) {
+    return _productRepository.getProductsByCategory(categoryID);
   }
 
   bool validateProduct(Product product) {

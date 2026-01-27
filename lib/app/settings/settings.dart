@@ -3,6 +3,7 @@ import 'package:serkohob/app/auth/helper.dart';
 import 'package:serkohob/app/auth/login.dart';
 import 'package:serkohob/app/logs/logs.dart';
 import 'package:serkohob/app/stock/manage.dart';
+import 'package:serkohob/app/stock/manage_categories.dart';
 import 'package:serkohob/util/navigation.dart';
 
 class SettingsWidget extends StatelessWidget {
@@ -13,6 +14,11 @@ class SettingsWidget extends StatelessWidget {
       title: 'Manage Products',
       iconData: Icons.list_alt_outlined,
       action: (context) => navigateTo(ManageProductsWidget(), context),
+    ),
+    _SettingsItem(
+      title: 'Manage Categories',
+      iconData: Icons.category_outlined,
+      action: (context) => navigateTo(ManageCategoriesWidget(), context),
     ),
     if (UserHelper.user.isAdmin)
       _SettingsItem(
