@@ -1,6 +1,7 @@
 import 'package:easy_books/app/refunds/refunds_helper.dart';
 import 'package:easy_books/models/Category.dart';
 import 'package:easy_books/models/Expense.dart';
+import 'package:easy_books/models/Product.dart';
 import 'package:easy_books/models/Receipt.dart';
 import 'package:easy_books/models/Refund.dart';
 import 'package:easy_books/models/Sale.dart';
@@ -93,8 +94,16 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                       ),
                       StreamBuilder<List<Category>>(
                         stream: categoryStream,
-                        builder: (context, snapshot) {
-                          return buildCategoryStockSums();
+                        builder: (context, categorySnapshot) {
+                          return StreamBuilder<List<Product>>(
+                            stream: stockStream,
+                            builder: (context, productSnapshot) {
+                              return buildCategoryStockSums(
+                                categorySnapshot.data,
+                                productSnapshot.data,
+                              );
+                            },
+                          );
                         },
                       ),
                     ],
@@ -257,26 +266,38 @@ class _DashboardWidgetState extends State<DashboardWidget> {
     );
   }
 
-  FutureBuilder<List<Map<String, Object>>> buildCategoryStockSums() {
-    return FutureBuilder<List<Map<String, Object>>>(
-      future: sumStockByCategory(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) return const SizedBox();
-        return Column(
-          children: snapshot.data!
-              .map(
-                (e) => ListTile(
-                  title: Text(e['name'] as String),
-                  trailing: Chip(
-                    label: Text(
-                      'GHS ${formatNumberAsCurrency(e['sum'] as double)}',
-                    ),
-                  ),
+  Widget buildCategoryStockSums(List<Category>? categories, List<Product>? products) {
+    if (categories == null || products == null) {
+      return const SizedBox();
+    }
+    
+    final stockSums = categories.map((category) {
+      final filteredProducts =
+          products.where((product) => product.categoryID == category.id).toList();
+
+      if (filteredProducts.isEmpty) {
+        return {'name': category.name, 'sum': 0.0};
+      }
+
+      final sum = filteredProducts
+          .map((product) => product.price * product.quantity)
+          .reduce((value, element) => value + element);
+      return {'name': category.name, 'sum': sum};
+    }).toList();
+    
+    return Column(
+      children: stockSums
+          .map(
+            (e) => ListTile(
+              title: Text(e['name'] as String),
+              trailing: Chip(
+                label: Text(
+                  'GHS ${formatNumberAsCurrency(e['sum'] as double)}',
                 ),
-              )
-              .toList(),
-        );
-      },
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 
