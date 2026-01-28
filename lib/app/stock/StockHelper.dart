@@ -71,6 +71,7 @@ class StockHelper {
     final oldProduct = await _productRepository.getProductById(product.id);
     if (oldProduct != null) {
       final updatedProduct = oldProduct.copyWith(
+        id: oldProduct.id,
         quantity: product.quantity + oldProduct.quantity,
       );
       await _productRepository.saveProduct(updatedProduct);
@@ -82,6 +83,7 @@ class StockHelper {
     final oldProduct = await _productRepository.getProductById(product.id);
     if (oldProduct != null) {
       final updatedProduct = oldProduct.copyWith(
+        id: oldProduct.id,
         quantity: oldProduct.quantity - product.quantity,
       );
       await _productRepository.saveProduct(updatedProduct);
@@ -102,7 +104,7 @@ class StockHelper {
     } else {
       final stock = stocks.first;
       await _stockRepository.save(
-        stock.copyWith(quantity: quantity),
+        stock.copyWith(id: stock.id, quantity: quantity),
       );
     }
   }

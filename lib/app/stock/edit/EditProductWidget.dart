@@ -160,6 +160,7 @@ class _EditProductWidgetState extends State<EditProductWidget> with StockHelper 
         );
 
     final product = widget.product.copyWith(
+      id: widget.product.id,
       name: name.text,
       price: double.tryParse(price.text) ?? 0,
       quantity: double.tryParse(quantity.text) ?? 0,
@@ -169,6 +170,7 @@ class _EditProductWidgetState extends State<EditProductWidget> with StockHelper 
     await saveProduct(product);
     await saveThreshold(
       productThreshold.copyWith(
+        id: productThreshold.id,
         quantity: double.tryParse(threshold.text.trim()) ?? 0,
         productId: product.id,
       ),

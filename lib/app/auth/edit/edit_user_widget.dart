@@ -117,6 +117,7 @@ class _EditUserWidgetState extends State<EditUserWidget> with UserHelper {
     }
 
     final user = widget.user.copyWith(
+      id: widget.user.id,
       username: username.text.trim(),
       password: password.text,
       isAdmin: isAdmin!,

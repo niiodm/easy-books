@@ -29,6 +29,7 @@ class RefundsHelper {
       final product = await _productRepository.getProductById(refund.productId!);
       if (product != null) {
         final updatedProduct = product.copyWith(
+          id: product.id,
           quantity: product.quantity + refund.quantity,
         );
         await _productRepository.saveProduct(updatedProduct);

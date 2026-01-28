@@ -76,6 +76,7 @@ class SalesHelper {
       final product = await _productRepository.getProductById(sale.productId);
       if (product != null) {
         final updatedProduct = product.copyWith(
+          id: product.id,
           quantity: product.quantity - sale.quantity,
         );
         await _productRepository.saveProduct(updatedProduct);

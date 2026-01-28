@@ -32,7 +32,7 @@ class AdminDataRepository {
   Future<void> setValue(String key, String value) async {
     final existing = await getByKey(key);
     if (existing != null) {
-      final updated = existing.copyWith(value: value);
+      final updated = existing.copyWith(id: existing.id, value: value);
       await save(updated);
     } else {
       final adminData = AdminData(key: key, value: value);
