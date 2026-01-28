@@ -53,10 +53,8 @@ class StockHelper {
     return _productRepository.watchProducts();
   }
 
-  Stream<List<model.Category>> categoryStream() async* {
-    final categories = await _categoryRepository.getCategories();
-    yield categories;
-    // Note: For real-time updates, we'd need to add watchCategories to CategoryRepository
+  Stream<List<model.Category>> categoryStream() {
+    return _categoryRepository.watchCategories();
   }
 
   Future<List<model.Category>> getCategories() {

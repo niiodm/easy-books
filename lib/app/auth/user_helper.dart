@@ -18,11 +18,8 @@ class UserHelper {
     return _userRepository.getAllUsers();
   }
 
-  Stream<List<User>> usersStream() async* {
-    final users = await _userRepository.getAllUsers();
-    yield users;
-    // Note: For real-time updates, we'd need to add watchUsers to UserRepository
-    // For now, return a single emission
+  Stream<List<User>> usersStream() {
+    return _userRepository.watchUsers();
   }
 
   Future<void> createUser(User user) {

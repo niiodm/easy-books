@@ -21,8 +21,8 @@ class ManageCategoriesWidget extends StatelessWidget with StockHelper {
         label: const Text('Create Category'),
         onPressed: () => navigateTo(const AddCategoryWidget(), context),
       ),
-      body: FutureBuilder<List<Category>>(
-        future: getCategories(),
+      body: StreamBuilder<List<Category>>(
+        stream: categoryStream(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const LoaderWidget();

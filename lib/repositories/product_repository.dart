@@ -54,6 +54,8 @@ class ProductRepository {
 }
 
 class CategoryRepository {
+  Stream<List<Category>>? _categoriesStream;
+
   Future<List<Category>> getCategories() async {
     final isar = await DatabaseService.instance;
     return await isar.categorys.where().findAll();
@@ -76,5 +78,15 @@ class CategoryRepository {
     await isar.writeTxn(() async {
       await isar.categorys.delete(id);
     });
+  }
+
+  Stream<List<Category>> watchCategories() {
+    _categoriesStream ??= Stream.fromFuture(DatabaseService.instance).asyncExpand((isar) {
+        return isar.categorys
+            .where()
+            .watch(fireImmediately: true)
+            .asBroadcastStream();
+      }).asBroadcastStream();
+    return _categoriesStream!;
   }
 }
