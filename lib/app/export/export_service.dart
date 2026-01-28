@@ -78,7 +78,7 @@ abstract class BackupService {
 }
 
 class JsonFileBackupService extends BackupService {
-  saveFileDialog(String path) async {
+  Future<String?>? saveFileDialog(String path) async {
     final params = SaveFileDialogParams(sourceFilePath: path);
     final filePath = await FlutterFileDialog.saveFile(params: params);
     return filePath;

@@ -1,6 +1,6 @@
 import 'package:easy_books/models/Threshold.dart' as eb;
 import 'package:flutter/material.dart';
-import 'package:easy_books/app/logs/LogHelper.dart';
+import 'package:easy_books/app/logs/log_helper.dart';
 import 'package:easy_books/app/stock/StockHelper.dart';
 import 'package:easy_books/models/Category.dart';
 import 'package:easy_books/models/Product.dart';
@@ -10,7 +10,7 @@ import 'package:easy_books/util/navigation.dart';
 class EditProductWidget extends StatefulWidget {
   final Product product;
 
-  const EditProductWidget({Key? key, required this.product}) : super(key: key);
+  const EditProductWidget({super.key, required this.product});
 
   @override
   _EditProductWidgetState createState() => _EditProductWidgetState();
@@ -96,7 +96,8 @@ class _EditProductWidgetState extends State<EditProductWidget> with StockHelper 
                   },
                   items: categories
                       .map((category) => DropdownMenuItem<int?>(
-                          child: Text(category.name), value: category.id))
+                          value: category.id,
+                          child: Text(category.name)))
                       .toList(),
                 ),
               );

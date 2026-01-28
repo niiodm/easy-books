@@ -33,15 +33,13 @@ class RefundRepository {
   }
 
   Stream<List<Refund>> watchRefunds() {
-    if (_refundsStream == null) {
-      _refundsStream = Stream.fromFuture(DatabaseService.instance).asyncExpand((isar) {
+    _refundsStream ??= Stream.fromFuture(DatabaseService.instance).asyncExpand((isar) {
         return isar.refunds
             .where()
             .sortByTimeDesc()
             .watch(fireImmediately: true)
             .asBroadcastStream();
       }).asBroadcastStream();
-    }
     return _refundsStream!;
   }
 }

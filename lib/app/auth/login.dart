@@ -8,7 +8,7 @@ import 'package:easy_books/util/dialog.dart';
 import 'package:easy_books/util/navigation.dart';
 
 class LoginWidget extends StatelessWidget with UserHelper {
-  LoginWidget({Key? key}) : super(key: key);
+  LoginWidget({super.key});
 
   final _key = GlobalKey<FormState>();
   final username = TextEditingController();

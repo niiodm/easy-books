@@ -8,11 +8,11 @@ class ProductAutoComplete extends StatelessWidget {
   final void Function(Product) onSelected;
 
   const ProductAutoComplete({
-    Key? key,
+    super.key,
     required this.products,
     required this.onSelected,
     this.label = 'Select Product',
-  }) : super(key: key);
+  });
 
   String productQuantityPriceString(Product product) {
     final name = product.name;

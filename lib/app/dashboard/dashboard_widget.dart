@@ -1,8 +1,8 @@
-import 'package:easy_books/app/refunds/RefundsHelper.dart';
+import 'package:easy_books/app/refunds/refunds_helper.dart';
 import 'package:easy_books/models/Category.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_books/app/auth/UserHelper.dart';
-import 'package:easy_books/app/expenses/ExpensesHelper.dart';
+import 'package:easy_books/app/auth/user_helper.dart';
+import 'package:easy_books/app/expenses/expenses_helper.dart';
 import 'package:easy_books/app/sales/SalesHelper.dart';
 import 'package:easy_books/app/stock/StockHelper.dart';
 import 'package:easy_books/constants.dart' as constants;
@@ -10,10 +10,10 @@ import 'package:easy_books/util/numbers.dart';
 import 'package:easy_books/util/temporal.dart';
 
 class DashboardWidget extends StatefulWidget {
-  const DashboardWidget({Key? key}) : super(key: key);
+  const DashboardWidget({super.key});
 
   @override
-  _DashboardWidgetState createState() => _DashboardWidgetState();
+  State<DashboardWidget> createState() => _DashboardWidgetState();
 }
 
 class _DashboardWidgetState extends State<DashboardWidget> {

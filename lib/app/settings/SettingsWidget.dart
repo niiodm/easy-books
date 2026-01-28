@@ -3,13 +3,13 @@ import 'package:easy_books/app/settings/SettingsItem.dart';
 import 'package:easy_books/app/settings/ManageDataSettingsWidget.dart';
 import 'package:easy_books/app/update/UpdateWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_books/app/auth/UserHelper.dart';
-import 'package:easy_books/app/auth/StaffLoginWidget.dart';
-import 'package:easy_books/app/logs/LogsWidget.dart';
+import 'package:easy_books/app/auth/user_helper.dart';
+import 'package:easy_books/app/auth/staff_login_widget.dart';
+import 'package:easy_books/app/logs/logs_widget.dart';
 import 'package:easy_books/util/navigation.dart';
 
 class SettingsWidget extends StatelessWidget {
-  SettingsWidget({Key? key}) : super(key: key);
+  SettingsWidget({super.key});
 
   final items = <SettingsItem>[
     if (UserHelper.user.isAdmin)

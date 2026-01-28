@@ -11,8 +11,7 @@ class ProductTile extends StatelessWidget with StockHelper {
   final bool canDelete;
 
   ProductTile(
-      {Key? key, required this.product, this.action, this.canDelete = false})
-      : super(key: key);
+      {super.key, required this.product, this.action, this.canDelete = false});
 
   @override
   Widget build(BuildContext context) {

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:easy_books/app/expenses/ExpensesHelper.dart';
-import 'package:easy_books/app/logs/LogHelper.dart';
+import 'package:easy_books/app/expenses/expenses_helper.dart';
+import 'package:easy_books/app/logs/log_helper.dart';
 import 'package:easy_books/models/Expense.dart';
 import 'package:easy_books/util/dialog.dart';
 import 'package:easy_books/util/numbers.dart';
 
 class AddExpenseWidget extends StatelessWidget with ExpensesHelper {
-  AddExpenseWidget({Key? key}) : super(key: key);
+  AddExpenseWidget({super.key});
 
   final _amount = TextEditingController();
   final _description = TextEditingController();

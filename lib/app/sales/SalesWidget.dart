@@ -1,6 +1,6 @@
 import 'package:easy_books/models/Sale.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_books/app/loader/LoaderWidget.dart';
+import 'package:easy_books/app/loader/loader_widget.dart';
 import 'package:easy_books/app/sales/add/AddReceiptWidget.dart';
 import 'package:easy_books/app/sales/details/SaleDetailsWidget.dart';
 import 'package:easy_books/app/sales/SalesHelper.dart';
@@ -10,7 +10,7 @@ import 'package:easy_books/util/numbers.dart';
 import 'package:easy_books/util/temporal.dart';
 
 class SalesWidget extends StatefulWidget {
-  const SalesWidget({Key? key}) : super(key: key);
+  const SalesWidget({super.key});
 
   @override
   _SalesWidgetState createState() => _SalesWidgetState();

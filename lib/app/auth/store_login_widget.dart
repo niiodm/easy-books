@@ -1,8 +1,8 @@
-import 'package:easy_books/app/auth/StaffLoginWidget.dart';
+import 'package:easy_books/app/auth/staff_login_widget.dart';
 import 'package:flutter/material.dart';
 
 class StoreLoginWidget extends StatelessWidget {
-  const StoreLoginWidget({Key? key}) : super(key: key);
+  const StoreLoginWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

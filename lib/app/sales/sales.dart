@@ -10,7 +10,7 @@ import 'package:easy_books/util/numbers.dart';
 import 'package:easy_books/util/temporal.dart';
 
 class SalesWidget extends StatefulWidget {
-  const SalesWidget({Key? key}) : super(key: key);
+  const SalesWidget({super.key});
 
   @override
   _SalesWidgetState createState() => _SalesWidgetState();

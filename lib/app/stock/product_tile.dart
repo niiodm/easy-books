@@ -5,7 +5,7 @@ import 'package:easy_books/util/numbers.dart';
 class ProductTile extends StatelessWidget {
   final Product product;
   final VoidCallback? action;
-  const ProductTile({Key? key, required this.product, this.action}) : super(key: key);
+  const ProductTile({super.key, required this.product, this.action});
 
   @override
   Widget build(BuildContext context) {

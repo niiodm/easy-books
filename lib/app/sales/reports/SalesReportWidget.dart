@@ -3,7 +3,7 @@ import 'package:easy_books/app/sales/reports/MonthlySalesReportWidget.dart';
 import 'package:flutter/material.dart';
 
 class SalesReportWidget extends StatelessWidget {
-  const SalesReportWidget({Key? key}) : super(key: key);
+  const SalesReportWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -6,7 +6,7 @@ import 'package:easy_books/util/dialog.dart';
 import 'package:easy_books/util/numbers.dart';
 
 class AddExpenseWidget extends StatelessWidget with ExpensesHelper {
-  AddExpenseWidget({Key? key}) : super(key: key);
+  AddExpenseWidget({super.key});
 
   final _amount = TextEditingController();
   final _description = TextEditingController();

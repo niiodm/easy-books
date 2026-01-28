@@ -6,10 +6,10 @@ import 'package:easy_books/util/dialog.dart';
 import 'package:easy_books/util/temporal.dart';
 
 class LogsWidget extends StatefulWidget {
-  const LogsWidget({Key? key}) : super(key: key);
+  const LogsWidget({super.key});
 
   @override
-  _LogsWidgetState createState() => _LogsWidgetState();
+  State<LogsWidget> createState() => _LogsWidgetState();
 }
 
 class _LogsWidgetState extends State<LogsWidget> with LogHelper {

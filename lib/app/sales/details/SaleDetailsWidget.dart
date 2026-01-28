@@ -2,7 +2,7 @@ import 'package:easy_books/app/stock/StockHelper.dart';
 import 'package:easy_books/models/Product.dart';
 import 'package:easy_books/models/Sale.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_books/app/loader/LoaderWidget.dart';
+import 'package:easy_books/app/loader/loader_widget.dart';
 import 'package:easy_books/app/sales/SalesHelper.dart';
 import 'package:easy_books/models/Receipt.dart';
 import 'package:easy_books/util/numbers.dart';
@@ -11,7 +11,7 @@ class SaleDetailsWidget extends StatelessWidget with SalesHelper {
   final Receipt receipt;
   final padding = const EdgeInsets.all(4);
 
-  SaleDetailsWidget({Key? key, required this.receipt}) : super(key: key);
+  SaleDetailsWidget({super.key, required this.receipt});
 
   @override
   Widget build(BuildContext context) {

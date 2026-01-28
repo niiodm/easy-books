@@ -1,8 +1,8 @@
-import 'package:easy_books/app/refunds/RefundsWidget.dart';
+import 'package:easy_books/app/refunds/refunds_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:easy_books/app/dashboard/DashboardWidget.dart';
-import 'package:easy_books/app/expenses/ExpensesWidget.dart';
+import 'package:easy_books/app/dashboard/dashboard_widget.dart';
+import 'package:easy_books/app/expenses/expenses_widget.dart';
 import 'package:easy_books/app/sales/SalesWidget.dart';
 import 'package:easy_books/app/settings/SettingsWidget.dart';
 import 'package:easy_books/app/stock/StockWidget.dart';

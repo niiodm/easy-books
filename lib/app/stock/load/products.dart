@@ -6,7 +6,7 @@ import 'package:easy_books/util/assets.dart';
 import 'package:easy_books/util/dialog.dart';
 
 class LoadProductsFromAsset extends StatefulWidget {
-  const LoadProductsFromAsset({Key? key}) : super(key: key);
+  const LoadProductsFromAsset({super.key});
 
   @override
   _LoadProductsFromAssetState createState() => _LoadProductsFromAssetState();
@@ -83,7 +83,9 @@ class _LoadProductsFromAssetState extends State<LoadProductsFromAsset>
         .where((element) => !productNames.contains(element.name.trim().toUpperCase()))
         .toList();
 
-    uniqueProducts.forEach((product) => saveProduct(product));
+    for (var product in uniqueProducts) {
+      saveProduct(product);
+    }
     print('unique products: ${uniqueProducts.length}');
     print('=' * 100);
 

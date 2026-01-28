@@ -10,7 +10,7 @@ import 'package:easy_books/models/Category.dart';
 import 'package:easy_books/util/navigation.dart';
 
 class ManageCategoriesWidget extends StatefulWidget {
-  const ManageCategoriesWidget({Key? key}) : super(key: key);
+  const ManageCategoriesWidget({super.key});
 
   @override
   _ManageCategoriesWidgetState createState() => _ManageCategoriesWidgetState();

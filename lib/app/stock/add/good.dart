@@ -5,7 +5,7 @@ import 'package:easy_books/models/Product.dart';
 import 'package:easy_books/util/dialog.dart';
 
 class AddGood extends StatefulWidget {
-  const AddGood({Key? key}) : super(key: key);
+  const AddGood({super.key});
 
   @override
   _AddGoodState createState() => _AddGoodState();
@@ -73,7 +73,7 @@ class _AddGoodState extends State<AddGood> with StockHelper {
     return ProductAutoComplete(
       products: products,
       onSelected: (selected) {
-        setState(() => this.product = selected);
+        setState(() => product = selected);
       },
     );
   }

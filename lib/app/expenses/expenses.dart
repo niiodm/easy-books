@@ -7,10 +7,10 @@ import 'package:easy_books/util/numbers.dart';
 import 'package:easy_books/util/temporal.dart';
 
 class ExpensesWidget extends StatefulWidget {
-  const ExpensesWidget({Key? key}) : super(key: key);
+  const ExpensesWidget({super.key});
 
   @override
-  _ExpensesWidgetState createState() => _ExpensesWidgetState();
+  State<ExpensesWidget> createState() => _ExpensesWidgetState();
 }
 
 class _ExpensesWidgetState extends State<ExpensesWidget> with ExpensesHelper {

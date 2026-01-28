@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:easy_books/app/auth/StaffLoginWidget.dart';
+import 'package:easy_books/app/auth/staff_login_widget.dart';
 import 'package:easy_books/app/auth/auth_service.dart';
 import 'package:easy_books/constants.dart' as constants;
 import 'package:easy_books/services/database_service.dart';
@@ -17,7 +17,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

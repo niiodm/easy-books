@@ -7,7 +7,7 @@ import 'package:easy_books/app/stock/manage_categories.dart';
 import 'package:easy_books/util/navigation.dart';
 
 class SettingsWidget extends StatelessWidget {
-  SettingsWidget({Key? key}) : super(key: key);
+  SettingsWidget({super.key});
 
   final items = [
     _SettingsItem(

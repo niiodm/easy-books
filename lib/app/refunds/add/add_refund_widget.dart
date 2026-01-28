@@ -1,5 +1,5 @@
-import 'package:easy_books/app/logs/LogHelper.dart';
-import 'package:easy_books/app/refunds/RefundsHelper.dart';
+import 'package:easy_books/app/logs/log_helper.dart';
+import 'package:easy_books/app/refunds/refunds_helper.dart';
 import 'package:easy_books/app/stock/StockHelper.dart';
 import 'package:easy_books/app/widgets/autocomplete/ProductAutoComplete.dart';
 import 'package:easy_books/models/Product.dart';
@@ -8,10 +8,10 @@ import 'package:easy_books/util/dialog.dart';
 import 'package:flutter/material.dart';
 
 class AddRefundWidget extends StatefulWidget {
-  const AddRefundWidget({Key? key}) : super(key: key);
+  const AddRefundWidget({super.key});
 
   @override
-  _AddRefundWidgetState createState() => _AddRefundWidgetState();
+  State<AddRefundWidget> createState() => _AddRefundWidgetState();
 }
 
 class _AddRefundWidgetState extends State<AddRefundWidget> with RefundsHelper {

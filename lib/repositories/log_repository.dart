@@ -38,15 +38,13 @@ class LogRepository {
   }
 
   Stream<List<Log>> watchLogs() {
-    if (_logsStream == null) {
-      _logsStream = Stream.fromFuture(DatabaseService.instance).asyncExpand((isar) {
+    _logsStream ??= Stream.fromFuture(DatabaseService.instance).asyncExpand((isar) {
         return isar.logs
             .where()
             .sortByTimeDesc()
             .watch(fireImmediately: true)
             .asBroadcastStream();
       }).asBroadcastStream();
-    }
     return _logsStream!;
   }
 }

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:easy_books/app/loader/LoaderWidget.dart';
-import 'package:easy_books/app/logs/LogHelper.dart';
+import 'package:easy_books/app/loader/loader_widget.dart';
+import 'package:easy_books/app/logs/log_helper.dart';
 import 'package:easy_books/models/Log.dart';
 import 'package:easy_books/util/dialog.dart';
 import 'package:easy_books/util/temporal.dart';
 
 class LogsWidget extends StatefulWidget {
-  const LogsWidget({Key? key}) : super(key: key);
+  const LogsWidget({super.key});
 
   @override
-  _LogsWidgetState createState() => _LogsWidgetState();
+  State<LogsWidget> createState() => _LogsWidgetState();
 }
 
 class _LogsWidgetState extends State<LogsWidget> with LogHelper {

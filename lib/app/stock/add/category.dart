@@ -6,7 +6,7 @@ import 'package:easy_books/util/dialog.dart';
 import 'package:easy_books/util/navigation.dart';
 
 class AddCategory extends StatefulWidget {
-  const AddCategory({Key? key}) : super(key: key);
+  const AddCategory({super.key});
 
   @override
   _AddCategoryState createState() => _AddCategoryState();

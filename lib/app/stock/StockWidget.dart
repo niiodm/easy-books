@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:easy_books/app/auth/UserHelper.dart';
+import 'package:easy_books/app/auth/user_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_books/app/loader/LoaderWidget.dart';
+import 'package:easy_books/app/loader/loader_widget.dart';
 import 'package:easy_books/app/stock/add/AddStockWidget.dart';
 import 'package:easy_books/app/stock/StockHelper.dart';
 import 'package:easy_books/app/stock/ProductTile.dart';
@@ -10,7 +10,7 @@ import 'package:easy_books/models/Product.dart';
 import 'package:easy_books/util/navigation.dart';
 
 class StockWidget extends StatefulWidget {
-  const StockWidget({Key? key}) : super(key: key);
+  const StockWidget({super.key});
 
   @override
   _StockWidgetState createState() => _StockWidgetState();

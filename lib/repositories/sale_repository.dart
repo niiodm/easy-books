@@ -92,15 +92,13 @@ class SaleRepository {
   }
 
   Stream<List<Receipt>> watchReceipts() {
-    if (_receiptsStream == null) {
-      _receiptsStream = Stream.fromFuture(DatabaseService.instance).asyncExpand((isar) {
+    _receiptsStream ??= Stream.fromFuture(DatabaseService.instance).asyncExpand((isar) {
         return isar.receipts
             .where()
             .sortByTimeDesc()
             .watch(fireImmediately: true)
             .asBroadcastStream();
       }).asBroadcastStream();
-    }
     return _receiptsStream!;
   }
 }

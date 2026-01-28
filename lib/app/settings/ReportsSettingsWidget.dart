@@ -4,7 +4,7 @@ import 'package:easy_books/util/navigation.dart';
 import 'package:flutter/material.dart';
 
 class ReportsSettingsWidget extends StatelessWidget {
-  ReportsSettingsWidget({Key? key}) : super(key: key);
+  ReportsSettingsWidget({super.key});
 
   final items = <SettingsItem>[
     SettingsItem(

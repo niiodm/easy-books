@@ -1,18 +1,19 @@
-import 'package:easy_books/app/refunds/add/AddRefundWidget.dart';
+import 'package:easy_books/app/refunds/add/add_refund_widget.dart';
 import 'package:easy_books/app/stock/StockHelper.dart';
 import 'package:easy_books/models/Product.dart';
 import 'package:easy_books/util/navigation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_books/app/refunds/RefundsHelper.dart';
+import 'package:easy_books/app/refunds/refunds_helper.dart';
 import 'package:easy_books/models/Refund.dart';
 import 'package:easy_books/util/numbers.dart';
 import 'package:easy_books/util/temporal.dart';
 
 class RefundsWidget extends StatefulWidget {
-  const RefundsWidget({Key? key}) : super(key: key);
+  const RefundsWidget({super.key});
 
   @override
-  _RefundsWidgetState createState() => _RefundsWidgetState();
+  State<RefundsWidget> createState() => _RefundsWidgetState();
 }
 
 class _RefundsWidgetState extends State<RefundsWidget> with RefundsHelper {
@@ -24,7 +25,9 @@ class _RefundsWidgetState extends State<RefundsWidget> with RefundsHelper {
       future: getRefundsByDateRange(dateRange),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          print('snapshot error: ${snapshot.error}');
+          if (kDebugMode) {
+            print('snapshot error: ${snapshot.error}');
+          }
         }
 
         if (!snapshot.hasData) {

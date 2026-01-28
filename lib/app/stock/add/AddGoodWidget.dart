@@ -5,7 +5,7 @@ import 'package:easy_books/models/Product.dart';
 import 'package:easy_books/util/dialog.dart';
 
 class AddGoodWidget extends StatefulWidget {
-  const AddGoodWidget({Key? key}) : super(key: key);
+  const AddGoodWidget({super.key});
 
   @override
   _AddGoodWidgetState createState() => _AddGoodWidgetState();

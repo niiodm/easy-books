@@ -42,15 +42,13 @@ class ProductRepository {
   }
 
   Stream<List<Product>> watchProducts() {
-    if (_productsStream == null) {
-      _productsStream = Stream.fromFuture(DatabaseService.instance).asyncExpand((isar) {
+    _productsStream ??= Stream.fromFuture(DatabaseService.instance).asyncExpand((isar) {
         return isar.products
             .where()
             .sortByName()
             .watch(fireImmediately: true)
             .asBroadcastStream();
       }).asBroadcastStream();
-    }
     return _productsStream!;
   }
 }

@@ -52,15 +52,13 @@ class ExpenseRepository {
   }
 
   Stream<List<Expense>> watchExpenses() {
-    if (_expensesStream == null) {
-      _expensesStream = Stream.fromFuture(DatabaseService.instance).asyncExpand((isar) {
+    _expensesStream ??= Stream.fromFuture(DatabaseService.instance).asyncExpand((isar) {
         return isar.expenses
             .where()
             .sortByTimeDesc()
             .watch(fireImmediately: true)
             .asBroadcastStream();
       }).asBroadcastStream();
-    }
     return _expensesStream!;
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:easy_books/app/logs/LogHelper.dart';
+import 'package:easy_books/app/logs/log_helper.dart';
 import 'package:easy_books/app/stock/StockHelper.dart';
 import 'package:easy_books/models/Category.dart';
 import 'package:easy_books/util/dialog.dart';
@@ -8,7 +8,7 @@ import 'package:easy_books/util/navigation.dart';
 class EditCategoryWidget extends StatefulWidget {
   final Category category;
 
-  const EditCategoryWidget({Key? key, required this.category}) : super(key: key);
+  const EditCategoryWidget({super.key, required this.category});
 
   @override
   _EditCategoryWidgetState createState() => _EditCategoryWidgetState();

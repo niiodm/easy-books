@@ -7,7 +7,7 @@ import 'package:easy_books/util/dialog.dart';
 import 'package:easy_books/util/navigation.dart';
 
 class AddProduct extends StatefulWidget {
-  const AddProduct({Key? key}) : super(key: key);
+  const AddProduct({super.key});
 
   @override
   _AddProductState createState() => _AddProductState();
@@ -71,7 +71,8 @@ class _AddProductState extends State<AddProduct> with StockHelper {
                   },
                   items: categories
                       .map((category) => DropdownMenuItem<Category>(
-                          child: Text(category.name), value: category))
+                          value: category,
+                          child: Text(category.name)))
                       .toList(),
                 ),
               );

@@ -7,7 +7,7 @@ import 'package:easy_books/util/navigation.dart';
 import 'package:easy_books/util/numbers.dart';
 
 class AddStock extends StatefulWidget {
-  const AddStock({Key? key}) : super(key: key);
+  const AddStock({super.key});
 
   @override
   _AddStockState createState() => _AddStockState();

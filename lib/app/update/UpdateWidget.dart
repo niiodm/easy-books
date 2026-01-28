@@ -1,11 +1,11 @@
-import 'package:easy_books/app/loader/LoaderWidget.dart';
+import 'package:easy_books/app/loader/loader_widget.dart';
 import 'package:easy_books/app/update/VersionHelper.dart';
 import 'package:easy_books/models/Version.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UpdateWidget extends StatelessWidget with VersionHelper {
-  UpdateWidget({Key? key}) : super(key: key);
+  UpdateWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

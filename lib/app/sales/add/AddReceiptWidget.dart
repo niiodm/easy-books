@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:easy_books/app/logs/LogHelper.dart';
+import 'package:easy_books/app/logs/log_helper.dart';
 import 'package:easy_books/app/sales/add/AddSaleWidget.dart';
 import 'package:easy_books/app/sales/SalesHelper.dart';
 import 'package:easy_books/app/stock/StockHelper.dart';
@@ -11,7 +11,7 @@ import 'package:easy_books/util/navigation.dart';
 import 'package:easy_books/util/numbers.dart';
 
 class AddReceiptWidget extends StatefulWidget {
-  const AddReceiptWidget({Key? key}) : super(key: key);
+  const AddReceiptWidget({super.key});
 
   @override
   _AddReceiptWidgetState createState() => _AddReceiptWidgetState();

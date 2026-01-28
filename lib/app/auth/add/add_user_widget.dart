@@ -1,15 +1,15 @@
-import 'package:easy_books/app/auth/UserHelper.dart';
-import 'package:easy_books/app/logs/LogHelper.dart';
+import 'package:easy_books/app/auth/user_helper.dart';
+import 'package:easy_books/app/logs/log_helper.dart';
 import 'package:easy_books/models/User.dart';
 import 'package:easy_books/util/dialog.dart';
 import 'package:easy_books/util/navigation.dart';
 import 'package:flutter/material.dart';
 
 class AddUserWidget extends StatefulWidget {
-  const AddUserWidget({Key? key}) : super(key: key);
+  const AddUserWidget({super.key});
 
   @override
-  _AddUserWidgetState createState() => _AddUserWidgetState();
+  State<AddUserWidget> createState() => _AddUserWidgetState();
 }
 
 class _AddUserWidgetState extends State<AddUserWidget> with UserHelper {

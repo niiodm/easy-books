@@ -8,7 +8,7 @@ import 'package:easy_books/util/navigation.dart';
 class EditCategory extends StatefulWidget {
   final Category category;
 
-  const EditCategory({Key? key, required this.category}) : super(key: key);
+  const EditCategory({super.key, required this.category});
 
   @override
   _EditCategoryState createState() => _EditCategoryState();
@@ -23,7 +23,7 @@ class _EditCategoryState extends State<EditCategory> with StockHelper {
   @override
   void initState() {
     super.initState();
-    this.name.text = widget.category.name;
+    name.text = widget.category.name;
   }
 
   @override

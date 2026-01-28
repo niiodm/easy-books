@@ -1,4 +1,4 @@
-import 'package:easy_books/app/loader/LoaderWidget.dart';
+import 'package:easy_books/app/loader/loader_widget.dart';
 import 'package:easy_books/app/sales/SalesHelper.dart';
 import 'package:easy_books/models/Sale.dart';
 import 'package:easy_books/util/numbers.dart';
@@ -6,7 +6,7 @@ import 'package:easy_books/util/temporal.dart';
 import 'package:flutter/material.dart';
 
 class MonthlySalesReportWidget extends StatelessWidget with SalesHelper {
-  MonthlySalesReportWidget({Key? key}) : super(key: key);
+  MonthlySalesReportWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

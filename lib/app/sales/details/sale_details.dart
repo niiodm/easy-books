@@ -12,7 +12,7 @@ class SaleDetailsWidget extends StatelessWidget with SalesHelper {
   final padding = const EdgeInsets.all(4);
   final ProductRepository _productRepository = ProductRepository();
 
-  SaleDetailsWidget({Key? key, required this.receipt}) : super(key: key);
+  SaleDetailsWidget({super.key, required this.receipt});
 
   @override
   Widget build(BuildContext context) {

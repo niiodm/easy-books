@@ -3,20 +3,20 @@ import 'dart:developer';
 import 'package:easy_books/util/hashing.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:easy_books/app/auth/UserHelper.dart';
+import 'package:easy_books/app/auth/user_helper.dart';
 import 'package:easy_books/app/auth/auth_service.dart';
 import 'package:easy_books/models/User.dart';
 import 'package:easy_books/app/home_widget.dart';
-import 'package:easy_books/app/logs/LogHelper.dart';
+import 'package:easy_books/app/logs/log_helper.dart';
 import 'package:easy_books/constants.dart' as constants;
 import 'package:easy_books/util/dialog.dart';
 import 'package:easy_books/util/navigation.dart';
 
 class StaffLoginWidget extends StatefulWidget {
-  const StaffLoginWidget({Key? key}) : super(key: key);
+  const StaffLoginWidget({super.key});
 
   @override
-  _StaffLoginWidgetState createState() => _StaffLoginWidgetState();
+  State<StaffLoginWidget> createState() => _StaffLoginWidgetState();
 }
 
 class _StaffLoginWidgetState extends State<StaffLoginWidget> with UserHelper {
@@ -104,8 +104,8 @@ class _StaffLoginWidgetState extends State<StaffLoginWidget> with UserHelper {
           items: snapshot.hasData
               ? snapshot.data!
                   .map((e) => DropdownMenuItem(
-                        child: Text(e.username),
                         value: e.username,
+                        child: Text(e.username),
                       ))
                   .toList()
               : [],

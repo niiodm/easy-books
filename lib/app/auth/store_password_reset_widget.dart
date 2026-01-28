@@ -1,8 +1,8 @@
-import 'package:easy_books/app/auth/StaffLoginWidget.dart';
+import 'package:easy_books/app/auth/staff_login_widget.dart';
 import 'package:flutter/material.dart';
 
 class StorePasswordResetWidget extends StatelessWidget {
-  const StorePasswordResetWidget({Key? key}) : super(key: key);
+  const StorePasswordResetWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

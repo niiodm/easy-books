@@ -9,7 +9,7 @@ import 'package:easy_books/constants.dart' as constants;
 import 'package:easy_books/util/navigation.dart';
 
 class HomeWidget extends StatefulWidget {
-  const HomeWidget({Key? key}) : super(key: key);
+  const HomeWidget({super.key});
 
   @override
   _HomeWidgetState createState() => _HomeWidgetState();
@@ -53,7 +53,7 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final option = this.options.elementAt(this.page);
+    final option = options.elementAt(page);
     final title = option.title ?? option.pageName;
 
     return Scaffold(
@@ -92,7 +92,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         child: ListView.builder(
           itemBuilder: (ctx, index) {
             final option = options.elementAt(index);
-            final selected = index == this.page;
+            final selected = index == page;
             return ListTile(
               leading: Icon(selected ? option.activeIcon : option.icon),
               title: Text(option.pageName),
@@ -108,14 +108,14 @@ class _HomeWidgetState extends State<HomeWidget> {
   }
 
   Widget body() {
-    return options.elementAt(this.page).pageWidget;
+    return options.elementAt(page).pageWidget;
   }
 
   BottomNavigationBar navigation() {
     return BottomNavigationBar(
       fixedColor: Colors.teal,
       unselectedItemColor: Colors.grey,
-      currentIndex: this.page,
+      currentIndex: page,
       showUnselectedLabels: true,
       onTap: setPage,
       items: options
@@ -131,7 +131,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   }
 
   void setPage(index) {
-    setState(() => this.page = index);
+    setState(() => page = index);
   }
 
   void action() {

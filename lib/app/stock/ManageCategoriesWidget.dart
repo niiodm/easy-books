@@ -3,7 +3,7 @@ import 'package:easy_books/app/stock/edit/EditCategoryWidget.dart';
 import 'package:easy_books/models/Category.dart';
 import 'package:easy_books/models/Product.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_books/app/loader/LoaderWidget.dart';
+import 'package:easy_books/app/loader/loader_widget.dart';
 import 'package:easy_books/app/stock/StockHelper.dart';
 import 'package:easy_books/util/navigation.dart';
 

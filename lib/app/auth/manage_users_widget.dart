@@ -1,7 +1,7 @@
-import 'package:easy_books/app/auth/add/AddUserWidget.dart';
-import 'package:easy_books/app/auth/edit/EditUserWidget.dart';
-import 'package:easy_books/app/auth/UserHelper.dart';
-import 'package:easy_books/app/loader/LoaderWidget.dart';
+import 'package:easy_books/app/auth/add/add_user_widget.dart';
+import 'package:easy_books/app/auth/edit/edit_user_widget.dart';
+import 'package:easy_books/app/auth/user_helper.dart';
+import 'package:easy_books/app/loader/loader_widget.dart';
 import 'package:easy_books/models/User.dart';
 import 'package:easy_books/util/navigation.dart';
 import 'package:flutter/material.dart';

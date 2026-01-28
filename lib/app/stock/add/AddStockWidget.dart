@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:easy_books/app/logs/LogHelper.dart';
+import 'package:easy_books/app/logs/log_helper.dart';
 import 'package:easy_books/app/stock/add/AddGoodWidget.dart';
 import 'package:easy_books/app/stock/StockHelper.dart';
 import 'package:easy_books/models/Product.dart';
@@ -7,7 +7,7 @@ import 'package:easy_books/util/navigation.dart';
 import 'package:easy_books/util/numbers.dart';
 
 class AddStockWidget extends StatefulWidget {
-  const AddStockWidget({Key? key}) : super(key: key);
+  const AddStockWidget({super.key});
 
   @override
   _AddStockWidgetState createState() => _AddStockWidgetState();

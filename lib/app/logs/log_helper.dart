@@ -1,4 +1,4 @@
-import 'package:easy_books/app/auth/UserHelper.dart';
+import 'package:easy_books/app/auth/user_helper.dart';
 import 'package:easy_books/models/Log.dart';
 import 'package:easy_books/repositories/log_repository.dart';
 import 'package:flutter/material.dart';

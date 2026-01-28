@@ -9,7 +9,7 @@ import 'package:easy_books/util/navigation.dart';
 class EditProduct extends StatefulWidget {
   final Product product;
 
-  const EditProduct({Key? key, required this.product}) : super(key: key);
+  const EditProduct({super.key, required this.product});
 
   @override
   _EditProductState createState() => _EditProductState();
@@ -28,10 +28,10 @@ class _EditProductState extends State<EditProduct> with StockHelper {
   void initState() {
     super.initState();
 
-    this.name.text = widget.product.name;
-    this.quantity.text = widget.product.quantity.toString();
-    this.price.text = widget.product.price.toString();
-    this.categoryID = widget.product.categoryID;
+    name.text = widget.product.name;
+    quantity.text = widget.product.quantity.toString();
+    price.text = widget.product.price.toString();
+    categoryID = widget.product.categoryID;
   }
 
   @override
@@ -83,7 +83,8 @@ class _EditProductState extends State<EditProduct> with StockHelper {
                   },
                   items: categories
                       .map((category) => DropdownMenuItem<int>(
-                          child: Text(category.name), value: category.id))
+                          value: category.id,
+                          child: Text(category.name)))
                       .toList(),
                 ),
               );

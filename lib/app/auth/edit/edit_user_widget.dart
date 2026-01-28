@@ -1,5 +1,5 @@
-import 'package:easy_books/app/auth/UserHelper.dart';
-import 'package:easy_books/app/logs/LogHelper.dart';
+import 'package:easy_books/app/auth/user_helper.dart';
+import 'package:easy_books/app/logs/log_helper.dart';
 import 'package:easy_books/models/User.dart';
 import 'package:easy_books/util/dialog.dart';
 import 'package:easy_books/util/navigation.dart';
@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 
 class EditUserWidget extends StatefulWidget {
   final User user;
-  const EditUserWidget({Key? key, required this.user}) : super(key: key);
+  const EditUserWidget({super.key, required this.user});
 
   @override
-  _EditUserWidgetState createState() => _EditUserWidgetState();
+  State<EditUserWidget> createState() => _EditUserWidgetState();
 }
 
 class _EditUserWidgetState extends State<EditUserWidget> with UserHelper {

@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:easy_books/app/auth/UserHelper.dart';
+import 'package:easy_books/app/auth/user_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_books/app/loader/LoaderWidget.dart';
+import 'package:easy_books/app/loader/loader_widget.dart';
 import 'package:easy_books/app/stock/add/AddProduct.dart';
 import 'package:easy_books/app/stock/edit/EditProductWidget.dart';
 import 'package:easy_books/app/stock/StockHelper.dart';
@@ -13,7 +13,7 @@ import 'package:easy_books/util/navigation.dart';
 class ManageProductsWidget extends StatelessWidget with StockHelper {
   final StreamController<String> filterController = StreamController<String>();
 
-  ManageProductsWidget({Key? key}) : super(key: key);
+  ManageProductsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

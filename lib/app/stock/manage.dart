@@ -12,6 +12,8 @@ import 'package:easy_books/util/navigation.dart';
 class ManageProductsWidget extends StatelessWidget with StockHelper {
   final StreamController<String> filterController = StreamController<String>();
 
+  ManageProductsWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

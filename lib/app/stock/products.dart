@@ -9,7 +9,7 @@ import 'package:easy_books/models/Product.dart';
 import 'package:easy_books/util/navigation.dart';
 
 class StockWidget extends StatefulWidget {
-  const StockWidget({Key? key}) : super(key: key);
+  const StockWidget({super.key});
 
   @override
   _StockWidgetState createState() => _StockWidgetState();

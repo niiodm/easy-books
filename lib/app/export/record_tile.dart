@@ -6,17 +6,17 @@ class BackupRecordTile extends StatelessWidget {
   final Widget? trailing;
 
   const BackupRecordTile({
-    Key? key,
+    super.key,
     required this.title,
     required this.number,
     this.trailing,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(title),
-      subtitle: Text('$number record' + (number == 1 ? '' : 's')),
+      subtitle: Text('$number record${number == 1 ? '' : 's'}'),
       trailing: trailing,
     );
   }
@@ -28,11 +28,11 @@ class ImportRecordTile extends StatefulWidget {
   final VoidCallback action;
 
   const ImportRecordTile({
-    Key? key,
+    super.key,
     required this.title,
     required this.number,
     required this.action,
-  }) : super(key: key);
+  });
 
   @override
   State<ImportRecordTile> createState() => _ImportRecordTileState();

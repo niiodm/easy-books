@@ -6,7 +6,7 @@ import 'package:easy_books/util/assets.dart';
 import 'package:easy_books/util/dialog.dart';
 
 class LoadProductsFromAsset extends StatefulWidget {
-  const LoadProductsFromAsset({Key? key}) : super(key: key);
+  const LoadProductsFromAsset({super.key});
 
   @override
   _LoadProductsFromAssetState createState() => _LoadProductsFromAssetState();

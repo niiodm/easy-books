@@ -7,7 +7,7 @@ import 'package:easy_books/models/Sale.dart';
 import 'package:easy_books/util/dialog.dart';
 
 class AddSaleWidget extends StatefulWidget {
-  const AddSaleWidget({Key? key}) : super(key: key);
+  const AddSaleWidget({super.key});
 
   @override
   _AddSaleWidgetState createState() => _AddSaleWidgetState();
@@ -55,7 +55,7 @@ class _AddSaleWidgetState extends State<AddSaleWidget> with SalesHelper {
               return ProductAutoComplete(
                 products: products,
                 onSelected: (selected) {
-                  setState(() => this.product = selected);
+                  setState(() => product = selected);
                 },
               );
             },

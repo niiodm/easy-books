@@ -11,7 +11,7 @@ import 'package:easy_books/util/navigation.dart';
 import 'package:easy_books/util/numbers.dart';
 
 class AddReceiptWidget extends StatefulWidget {
-  const AddReceiptWidget({Key? key}) : super(key: key);
+  const AddReceiptWidget({super.key});
 
   @override
   _AddReceiptWidgetState createState() => _AddReceiptWidgetState();
