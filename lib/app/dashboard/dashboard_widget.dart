@@ -22,10 +22,10 @@ class _DashboardWidgetState extends State<DashboardWidget> {
       const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0);
   late DateTimeRange dateRange;
 
-  final salesStream = SalesHelper().observeSales();
-  final expensesStream = ExpensesHelper().observeExpenses();
-  final stockStream = StockHelper().productStream();
-  final categoryStream = StockHelper().categoryStream();
+  late final salesStream = SalesHelper().observeSales().asBroadcastStream();
+  late final expensesStream = ExpensesHelper().observeExpenses().asBroadcastStream();
+  late final stockStream = StockHelper().productStream().asBroadcastStream();
+  late final categoryStream = StockHelper().categoryStream().asBroadcastStream();
 
   @override
   void initState() {

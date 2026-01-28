@@ -92,10 +92,6 @@ class _StaffLoginWidgetState extends State<StaffLoginWidget> with UserHelper {
     return FutureBuilder<List<User>>(
       future: findUsers(),
       builder: (context, snapshot) {
-        log('Users present: ${snapshot.hasData}');
-        log('Error present: ${snapshot.hasError}');
-        log('Error message: ${snapshot.error}');
-
         if (snapshot.hasError) {
           log(snapshot.error?.toString() ?? 'Error fetching users');
         }
