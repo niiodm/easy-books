@@ -21,8 +21,8 @@ class _RefundsWidgetState extends State<RefundsWidget> with RefundsHelper {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Refund>>(
-      future: getRefundsByDateRange(dateRange),
+    return StreamBuilder<List<Refund>>(
+      stream: observeRefundsInDateRange(dateRange),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           if (kDebugMode) {

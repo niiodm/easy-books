@@ -17,7 +17,13 @@ class RefundsHelper {
   }
 
   Stream<List<Refund>> observeRefundsInDateRange(DateTimeRange range) {
-    return _refundRepository.watchRefunds();
+    return _refundRepository.watchRefunds().map((refunds) {
+      final nextDay = DateTime(range.end.year, range.end.month, range.end.day + 1);
+      return refunds.where((refund) {
+        return refund.time.isAfter(range.start.subtract(const Duration(days: 1))) &&
+               refund.time.isBefore(nextDay);
+      }).toList();
+    });
   }
 
   Future<void> saveRefund(Refund refund) {

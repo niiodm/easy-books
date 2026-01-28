@@ -1,5 +1,6 @@
 import 'package:easy_books/app/refunds/refunds_helper.dart';
 import 'package:easy_books/models/Category.dart';
+import 'package:easy_books/models/Refund.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_books/app/auth/user_helper.dart';
 import 'package:easy_books/app/expenses/expenses_helper.dart';
@@ -123,12 +124,18 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                     const Divider(height: 0),
                     ListTile(
                       title: const Text('Total Refunds'),
-                      trailing: StreamBuilder(
+                      trailing: StreamBuilder<List<Refund>>(
                         stream: RefundsHelper()
                             .observeRefundsInDateRange(dateRange),
                         builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Chip(label: Text('GHS 0.00'));
+                          }
+                          final refunds = snapshot.data ?? [];
+                          final refundsHelper = RefundsHelper();
+                          final sum = refundsHelper.sumRefunds(refunds);
                           return Chip(
-                            label: buildSum(getRefundTotals()),
+                            label: Text('GHS ${formatNumberAsCurrency(sum)}'),
                           );
                         },
                       ),
