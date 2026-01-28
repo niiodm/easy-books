@@ -1,6 +1,9 @@
 import 'package:easy_books/app/refunds/refunds_helper.dart';
 import 'package:easy_books/models/Category.dart';
+import 'package:easy_books/models/Expense.dart';
+import 'package:easy_books/models/Receipt.dart';
 import 'package:easy_books/models/Refund.dart';
+import 'package:easy_books/models/Sale.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_books/app/auth/user_helper.dart';
 import 'package:easy_books/app/expenses/expenses_helper.dart';
@@ -155,14 +158,38 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                     const Divider(height: 0),
                     ListTile(
                       title: const Text('Balance'),
-                      trailing: StreamBuilder(
-                        stream: expensesStream,
-                        builder: (context, snapshot) {
-                          return StreamBuilder(
-                            stream: salesStream,
-                            builder: (context, snapshot) {
-                              return Chip(
-                                label: buildSum(getBalance()),
+                      trailing: StreamBuilder<List<Receipt>>(
+                        stream: salesStream,
+                        builder: (context, salesSnapshot) {
+                          return StreamBuilder<List<Expense>>(
+                            stream: expensesStream,
+                            builder: (context, expensesSnapshot) {
+                              return StreamBuilder<List<Refund>>(
+                                stream: RefundsHelper()
+                                    .observeRefundsInDateRange(dateRange),
+                                builder: (context, refundsSnapshot) {
+                                  if (!salesSnapshot.hasData || 
+                                      !expensesSnapshot.hasData || 
+                                      !refundsSnapshot.hasData) {
+                                    return const Chip(label: Text('GHS 0.00'));
+                                  }
+                                  
+                                  return FutureBuilder<double>(
+                                    future: _calculateBalance(
+                                      salesSnapshot.data!,
+                                      expensesSnapshot.data!,
+                                      refundsSnapshot.data!,
+                                    ),
+                                    builder: (context, balanceSnapshot) {
+                                      final balance = balanceSnapshot.hasData 
+                                          ? balanceSnapshot.data! 
+                                          : 0.0;
+                                      return Chip(
+                                        label: Text('GHS ${formatNumberAsCurrency(balance)}'),
+                                      );
+                                    },
+                                  );
+                                },
                               );
                             },
                           );
@@ -310,6 +337,49 @@ class _DashboardWidgetState extends State<DashboardWidget> {
     }
 
     return 0.0;
+  }
+
+  Future<double> _calculateBalance(
+    List<Receipt> allReceipts,
+    List<Expense> allExpenses,
+    List<Refund> refunds,
+  ) async {
+    final saleHelper = SalesHelper();
+    final expenseHelper = ExpensesHelper();
+    final refundsHelper = RefundsHelper();
+    
+    try {
+      // Filter receipts by date range
+      final nextDay = DateTime(dateRange.end.year, dateRange.end.month, dateRange.end.day + 1);
+      final filteredReceipts = allReceipts.where((receipt) {
+        if (receipt.time == null) return false;
+        return receipt.time!.isAfter(dateRange.start.subtract(const Duration(days: 1))) &&
+               receipt.time!.isBefore(nextDay);
+      }).toList();
+      
+      // Get all sales for filtered receipts
+      final allSales = <Sale>[];
+      for (final receipt in filteredReceipts) {
+        final sales = await saleHelper.getSalesByReceipt(receipt);
+        allSales.addAll(sales);
+      }
+      
+      // Filter expenses by date range
+      final filteredExpenses = allExpenses.where((expense) {
+        return expense.time.isAfter(dateRange.start.subtract(const Duration(days: 1))) &&
+               expense.time.isBefore(nextDay);
+      }).toList();
+      
+      // Calculate balance: Sales - Expenses - Refunds
+      final salesTotal = saleHelper.sumSales(allSales);
+      final expensesTotal = expenseHelper.sumExpenses(filteredExpenses);
+      final refundsTotal = refundsHelper.sumRefunds(refunds);
+      
+      return salesTotal - expensesTotal - refundsTotal;
+    } catch (e) {
+      print('Error calculating balance: $e');
+      return 0.0;
+    }
   }
 
   Future<double> getBalance() async {
